@@ -1,0 +1,21 @@
+$my-color: #ffedb8;
+
+body {
+	background-color: $my-color;
+	&>div{
+		display: flex;
+		flex-wrap: wrap;
+		height:20em;
+		width:20em;
+		background-color: peachpuff;
+		.part{
+			flex: 1 0 10%;
+			background-color: pink;
+			margin: 0.5em;
+		}
+	}
+	h1 {
+		color: orange;
+		border-bottom: 5px white solid;
+	}
+}
