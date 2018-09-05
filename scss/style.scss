@@ -17,10 +17,10 @@
 // @import "grid";
 // @import "tables";
 // @import "forms";
-// @import "buttons";
-// @import "transitions";
-// @import "dropdown";
-// @import "button-group";
+@import "../node_modules/bootstrap/scss/buttons";
+@import "../node_modules/bootstrap/scss/transitions";
+@import "../node_modules/bootstrap/scss/dropdown";
+@import "../node_modules/bootstrap/scss/button-group";
 // @import "input-group";
 // @import "custom-forms";
 // @import "nav";
