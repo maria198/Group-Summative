@@ -1,0 +1,46 @@
+// Base
+
+.section{
+	min-height: 100vh;
+	min-width: 320px;
+	width: 100%;
+}
+
+
+// Section 1
+
+.section-1{
+
+	background-color: $color1;
+	position: relative;
+
+	.content{
+		position: absolute;
+		left:50%;
+		top:50%;
+		transform: translate(-50%,-50%);
+	}
+	.img-gritting{
+		height: 3em;
+		width: auto;
+	}
+}
+
+// Section 2
+
+// Section 3
+
+// Section 4
+
+
+@media only screen and (min-width: 40em) {
+
+}
+
+@media only screen and (min-width: 60em) {
+	
+}
+
+@media only screen and (min-width: 80em) {
+	
+}
