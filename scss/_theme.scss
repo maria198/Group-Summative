@@ -1,5 +1,11 @@
 // Base
 
+.header, .footer{
+	background-color: $color2;
+	height:$headerfooterheight;
+
+}
+	
 .section{
 	min-height: 100vh;
 	min-width: 320px;
@@ -29,6 +35,23 @@
 // Section 2
 
 // Section 3
+
+.section-3{
+	display:flex;
+	flex-direction:column;
+
+	.choices-list{
+		flex:1 0 50%;
+		display:flex;
+		flex-direction:column;
+		.choices{
+			flex:1 0 10%;
+			border-top:thick solid $darken;
+			border-bottom:thick solid $darken;
+			background-color:$color1;
+		}
+	}
+}
 
 // Section 4
 
