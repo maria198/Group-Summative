@@ -91,11 +91,12 @@
 
 			.drop-btn { 
 				margin-right:1.5em;
+				width: 3em;
+				text-align:center;
 				
 
 				i{
 					font-size:$button-size;
-       				text-align:center;
 					color:$color2;
 				}
 			}
@@ -105,7 +106,14 @@
 }
 
 // Section 4
-
+.section-4 {
+	display: flex;
+	flex-direction: column;
+	#map {
+		flex:
+		1 0 20em;
+	}
+}
 
 @media only screen and (min-width: 40em) {
 
