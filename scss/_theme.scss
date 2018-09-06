@@ -32,6 +32,7 @@
 	min-height: 100vh;
 	min-width: 320px;
 	width: 100%;
+	font-family:$font-main;
 }
 
 
@@ -71,6 +72,36 @@
 			border-top:thick solid $darken;
 			border-bottom:thick solid $darken;
 			background-color:$color1;
+
+			display:flex;
+			flex-wrap:wrap;
+			align-items:center;
+			justify-content:space-between;
+
+				
+			.choice-name {
+				margin-left:1em;
+				flex:1 0 60%;
+				color:$color2;
+			}
+
+			.drop-btn { 
+				box-sizing:border-box;
+				padding:1em;
+				width:1em;
+				flex:1 0 10%;
+				display:flex;
+				flex-wrap:wrap;
+				align-items:center;
+				justify-content:space-around;
+
+				i{
+					font-size:$button-size;
+       				text-align:center;
+					color:$color2;
+				}
+			}
+
 		}
 	}
 }
