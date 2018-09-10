@@ -7,6 +7,9 @@
 	align-items:center;
 	justify-content:space-between;
 }
+.header {
+	border-bottom: medium $color1 solid;
+}
 
 .logo{
 	flex:0 0 2.5em;
@@ -58,6 +61,73 @@
 }
 
 // Section 2
+
+.section-2 {
+	background-image: url(../assets/images/fon.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+
+
+	.logo-full {
+		text-align: center;
+		width: 100%;
+
+		img {
+			height: 50px;
+		}
+	}
+	.select-wrap {
+
+		max-width: 300px;
+		margin-left: 5em;
+
+
+		.select {
+
+			background-color: lighten($color1, 5%);
+			color: white;
+			font-size: 1.5em;
+			max-width: 7em;
+			text-align: center;
+			margin-top: 3em;
+			border-radius: 0.15em;
+
+				p {
+					margin: 0;
+				}
+		}
+		.location {
+			
+			max-width: 300px;
+
+				#dropdownMenu2 {
+					background-color: white;
+					color: $color1;
+					margin-top: 0;
+					padding-right: 1em;
+					width: 100%;
+					font-size: 1.5em;
+				}
+
+				.explore{
+					background-color: $color1;
+					width: 100%;
+					text-align: center;
+					padding-top: 0.5em;
+					padding-bottom: 0.5em;
+					border-radius: 0.15em;
+					
+					img {
+						width: 40%;
+					}
+				}
+		}
+	}
+	
+
+	
+
+}
 
 // Section 3
 
