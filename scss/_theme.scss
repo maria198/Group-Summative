@@ -59,6 +59,132 @@
 		width: auto;
 	}
 }
+// section 1
+	.section-1{
+		background-image:url("../../assets/images/fon.png");
+		background-repeat:no-repeat;
+		background-size:cover;
+	}
+	.s1-logo{
+		background-image:url("../../assets/images/logo-red.png");
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position:center;
+		background-color:white;
+		border-bottom:2px red solid;
+		height: 5em;
+	}
+	.neutral{
+		background-color: rgba(190,0,0,1);
+	}
+	.current{
+		background-color: red !important;
+	}
+	.login-box{
+		// border: 1px red solid;
+		width: 80%;
+		// height: 15em;
+		margin: auto;
+		margin-top: 2.5em;
+		display:flex;
+		flex-wrap:wrap;
+
+		.login{
+			flex: 0 0 30%;
+			height: 2em;
+			font-style: $font-main;
+			font-size: 1.5em;
+			// background-color: $color1;
+			color:white;
+			text-align:center;
+			padding-right:0.4em;
+			// margin-bottom: 2em;
+
+		}
+	}
+	.sign-up{
+		flex: 0 0 30%;
+		// border: 1px blue solid;
+		height: 2em;
+		font-style: $font-main;
+		font-size: 1.5em;
+		// background-color: $color1;
+		color:white;
+		text-align:center;
+		padding-right:0.4em;
+		
+	}
+	.sign-in-form{
+		// display:none;
+	}
+	.input-field{
+		border: 2px red solid;
+		display:flex;
+		margin-top: 1em;
+		border-radius: 5px;
+		padding:0.5em;
+		background-color: white;
+		.input{
+			flex: 0 0 85%;
+			border-radius: 5px;
+			padding:0.5em;
+			border:none;
+		}
+		
+	input.input[type=text]{
+			color: red;
+			box-sizing:border-box;
+			font-weight:bold;
+			font-size: 1.5em;
+			 -webkit-transition: width 0.4s ease-in-out;
+    		transition: width 0.4s ease-in-out;
+    		box-shadow:none;
+	}
+	input[type=text]:focus{
+			outline:none;
+			width: 100%;
+			box-shadow:none;
+	}
+	.input::placeholder{
+				color: $color1;
+				font-size: 1.5em;
+	}
+
+
+
+	.fas{
+		flex: 0 0 10%;
+		font-size: 2em;
+		line-height:1.5em;
+		border-right: 2px solid red;
+		margin:auto;
+		color: $color1;
+
+	}
+	
+	form{
+		margin-top: 2em;
+		
+		width: 90%;
+		margin:auto;
+	}
+	.btn1{
+		background-image:url("../../assets/icons/globe-grey.svg");
+		background-repeat: no-repeat;
+		background-position: center;
+		height:4em;
+		flex:1 0 100%;
+		padding:0;
+		background-color: rgba(255,50,0,1);
+		border-radius: 0 0 5px 5px;
+	}
+	.box{
+	width:100%;
+	// border: 1px blue solid;
+	padding-bottom:2em;
+	background-color: rgba(211,211,211,1.2);
+	}	
+
 
 // Section 2
 
