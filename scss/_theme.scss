@@ -23,7 +23,7 @@
 }
 
 .location-title, .location-choice{
-	h1{
+	h3{
 		margin:0 1em 0 0;
 	}
 }
@@ -106,19 +106,16 @@
 		}
 		.location {
 			
-			max-width: 300px;
+			max-width: 90vw;
 
 				.dropdown-toggle {
 					background-color: $color2;
 					color: $color3;
 					width: 100%;
-					font-size: 1.5em;
+					font-size:1.2em;
 					border-radius:0;
-					text-indent:10%;
 					border-top-right-radius: $radius;
-					&::after{
-						margin-left:10%;
-					}
+					padding:0.6em;
 					&:focus{
 						color:$color1;
 						box-shadow: none;
@@ -188,7 +185,7 @@
 			.choice-name {
 				margin-left:1em;
 				color:$color2;
-				h1{
+				h3{
 					font-weight:300;
 				}
 			}
