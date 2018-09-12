@@ -26,10 +26,10 @@
 				</div>
 			</div>
 		</section>
-		<section class="section section-1">
+		<!-- <section class="section section-1">
 			
 		</section>
-
+ -->
 		<section class="section section-2">
 			
 			<div class="header">
@@ -37,28 +37,26 @@
 					<img src="assets/images/logo-red.png" alt="">
 				</div>
 			</div>
-			
-			<div class="select-wrap">
-				<div class="select">
-					<p>Select Place</p>
+			<div class="selectplace-wrapper">
+				<div class="selectplace-header">
+					<h3>select place</h3>
 				</div>
-				<div class="location">
-					<div class="dropdown">
-					  	<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Locations </button>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-							<button class="dropdown-item" type="button">Auckland Cental</button>
-							<button class="dropdown-item" type="button">Rodney & North Shore</button>
-							<button class="dropdown-item" type="button">Waitakere & West Auckland</button>
-							<button class="dropdown-item" type="button">Manukau & East Auckland</button>
-							<button class="dropdown-item" type="button">Papakura & Franklin</button>					
-						</div>
-					</div>
-
-					<div class="explore">
-						<img src="assets/images/explore.png" alt="">
-					</div>
+				<div class="selectplace-dropdown dropdown show">
+					  <a class="dropdown-toggle dropdown-header" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					    Auckland
+					  </a>
+					  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					    <li class="dropdown-item" v-for="suburb in suburbs">{{suburb.name}}</li>
+					  </ul>
+				</div>
+				<div class="selestplace-selected">
+					<h3></h3>
+				</div>
+				<div class="selectplace-button">
+					<img src="assets/images/explore.png" alt="explore">
 				</div>
 			</div>
+			
 		</section>
 
 		<section class="section section-3">
@@ -167,7 +165,11 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"></script>
 	<script src="vendore/tilt/tilt.js"></script>
+	<script src="vendore/popper/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="vendore/underscore/underscore.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="assets/data/auckland-suburbs.js"></script>
 	<script src="js/script.js"></script>
 </body>
 </html>
