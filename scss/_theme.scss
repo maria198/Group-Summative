@@ -31,20 +31,28 @@
 	i{
 		font-size:$button-size;
 	}
-}
-	
+}	
 .section{
 	min-height: 100vh;
 	min-width: 320px;
 	width: 100%;
 	font-family:$font-main;
+
+	position: absolute;
+	top:0;
+	left:0;
+	overflow:hidden;
 }
-
-
+.section.slide-in{
+	left:-120%;
+}
+.current-section{
+	z-index: 20;
+}
 // Section 0
 
 .section-0{
-
+	z-index: 30;
 	background-color: $color1;
 	position: relative;
 
@@ -53,10 +61,26 @@
 		left:50%;
 		top:50%;
 		transform: translate(-50%,-50%);
+
+
 	}
 	.img-gritting{
 		height: 3em;
 		width: auto;
+	}
+	#loading-anime{
+		margin: 1em auto;
+		display:flex;
+		flex-wrap: wrap;
+		width: 8em;
+		justify-content: space-around;
+		.small-circle{
+			background-color: $color2;
+			height: 1em;
+			width:1em;
+			border-radius: 50%;
+			opacity:0;
+		}
 	}
 }
 
@@ -136,8 +160,7 @@
 			transform: translateY(-50%);
 			margin-right:1em;
 		}
-	}
-		
+	}	
 }
 
 // Section 3

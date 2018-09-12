@@ -1,7 +1,11 @@
-// Map
 
 $(()=>{
  	
+ 	// Navigation
+ 	
+
+ 	
+ 	// Map
  	var center = {lat: -45.031449, lng: 168.661904};
  	var map = L.map('map').setView(center, 17);
 
@@ -39,5 +43,19 @@ let dropDown = new Vue({
 		this.loadSuburbs();
 	}
 });
+// Loading page animation
+// Effect of loading 
+var loading = anime({
+	targets: '#loading-anime .small-circle',
+	opacity: function(el, i, l) { let d = 0.25; return 1 - d*i; },
+	translateX: [150,0],
+	easing: [.91,-0.54,.29,1.56],
+	loop: 3,
+	duration: 1500,
+	delay: function(el, i, l) { return i * 200; }
+});
+// Hides the loading page
+$('section#loading-page.section.section-0').delay(4800).fadeOut(1000);
+
 
 
