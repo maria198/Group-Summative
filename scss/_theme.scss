@@ -6,8 +6,14 @@
 	flex-wrap:wrap;
 	align-items:center;
 	justify-content:space-between;
+	color:$color1;
 }
-.header {
+
+.header{
+	color:$color3;
+}
+
+.section-2 .header, .section-4 .header {
 	border-bottom: medium $color1 solid;
 }
 
@@ -34,8 +40,8 @@
 }
 	
 .section{
-	min-height: 100vh;
-	min-width: 320px;
+	height: 100vh;
+	width: 100vw;
 	width: 100%;
 	font-family:$font-main;
 }
@@ -73,7 +79,7 @@
 		width: 100%;
 
 		img {
-			height: 50px;
+			height: 30px;
 		}
 	}
 	.select-wrap {
@@ -85,41 +91,68 @@
 
 		.select {
 
-			background-color: lighten($color1, 5%);
-			color: white;
-			font-size: 1.5em;
+			background-color: lighten($color3, 5%);
+			color: $color2;
 			max-width: 7em;
 			text-align: center;
-			margin-top: 3em;
-			border-radius: 0.15em;
+			margin-top: 20%;
+			border-top-left-radius: $radius;
+			border-top-right-radius: $radius;
 
 				p {
 					margin: 0;
+					font-size: 1em;
 				}
 		}
 		.location {
 			
 			max-width: 300px;
 
-				#dropdownMenu2 {
-					background-color: white;
-					color: $color1;
-					margin-top: 0;
-					padding-right: 1em;
+				.dropdown-toggle {
+					background-color: $color2;
+					color: $color3;
 					width: 100%;
 					font-size: 1.5em;
+					border-radius:0;
+					text-indent:10%;
+					border-top-right-radius: $radius;
+					&::after{
+						margin-left:10%;
+					}
+					&:focus{
+						color:$color1;
+						box-shadow: none;
+					}
+
+				}
+				.dropdown-menu {
+					width:100%;
+					border-radius:0;
+					background-color:$color2;
+					margin:0;
+					border:none;
+					border-bottom-right-radius: $radius;
+					border-bottom-left-radius: $radius;
+					button{
+						color:$color3;
+						text-indent: 10%;
+						padding:0.5em 0 0.5em 0;
+					}
+				}
+				.btn-secondary{
+					border:none;
 				}
 
 				.explore{
 					background-color: $color1;
-					width: 100%;
 					text-align: center;
-					padding-top: 0.5em;
-					padding-bottom: 0.5em;
-					border-radius: 0.15em;
+					padding: 0.5em;
+					border-bottom-right-radius: $radius;
+					border-bottom-left-radius: $radius;
+
 					
 					img {
-						width: 40%;
+						width: 30%;
 					}
 				}
 		}
@@ -144,7 +177,7 @@
 			flex:1 0 10%;
 			border-top:thick solid $darken;
 			border-bottom:thick solid $darken;
-			background-color:$color1;
+			background-color:lighten($color3, 5%);
 
 			display:flex;
 			flex-wrap:wrap;
