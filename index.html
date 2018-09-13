@@ -19,10 +19,10 @@
 				<div>
 					<img class="img-gritting" src="assets/images/hello.png" alt="HELLO">
 				</div>
-				<div class="loading-anime">
-					<div class="small-circle"></div>
-					<div class="small-circle"></div>
-					<div class="small-circle"></div>
+				<div id="loading-anime">
+					<div class="small-circle small-circle1"></div>
+					<div class="small-circle small-circle2"></div>
+					<div class="small-circle small-circle3"></div>
 				</div>
 			</div>
 		</section>
@@ -44,7 +44,7 @@
 				</div>
 				<div class="location">
 					<div class="dropdown">
-					  	<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Locations </button>
+					  	<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Locations</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 							<button class="dropdown-item" type="button" data-lat="-36.86667" data-lng="174.76667">Auckland Central</button>
 							<button class="dropdown-item" type="button" data-lat="-36.8" data-lng="174.75">Rodney & North Shore</button>
@@ -86,7 +86,7 @@
 					</div>
 				</div>
 
-				<div class="choices row food" data-choice="food">
+				<div class="choices row food" data-choice="4d4b7105d754a06374d81259">
 					<div class="choice-name">
 						<h3>Food</h3>
 					</div>
@@ -94,15 +94,15 @@
 						<i class="fas fa-utensils"></i>
 					</div>
 				</div>
-				<div class="choices row beverage" data-choice="beverage">
+				<div class="choices row cafe" data-choice="4bf58dd8d48988d16d941735">
 					<div class="choice-name">
-						<h3>Beverages</h3>
+						<h3>Cafe</h3>
 					</div>
 					<div class="drop-btn">
 						<i class="fas fa-coffee"></i>
 					</div>
 				</div>
-				<div class="choices row arts-culture" data-choice="arts">
+				<div class="choices row arts-culture" data-choice="4d4b7104d754a06370d81259">
 					<div class="choice-name">
 						<h3>Arts & Culture</h3>
 					</div>
@@ -110,7 +110,7 @@
 						<i class="fas fa-theater-masks"></i>
 					</div>
 				</div>
-				<div class="choices row parks-walks" data-choice="parks">
+				<div class="choices row parks-walks" data-choice="4d4b7105d754a06377d81259">
 					<div class="choice-name">
 						<h3>Parks & Walks</h3>
 					</div>
@@ -119,7 +119,7 @@
 					</div>
 				</div>
 
-				<div class="choices row transport" data-choice="transport">
+				<div class="choices row transport" data-choice="4d4b7105d754a06379d81259">
 					<div class="choice-name">
 						<h3>Transport</h3>
 					</div>
@@ -168,6 +168,7 @@
 	<script src="vendore/popper/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"></script>
+	<script src="vendore/anime/anime.js"></script>
 	<script src="vendore/tilt/tilt.js"></script>
 	<script src="vendore/underscore/underscore.js"></script>
 

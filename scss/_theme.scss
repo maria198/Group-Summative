@@ -50,7 +50,7 @@
 // Section 1
 
 .section-0{
-
+	z-index: 30;
 	background-color: $color1;
 	position: relative;
 
@@ -59,12 +59,29 @@
 		left:50%;
 		top:50%;
 		transform: translate(-50%,-50%);
+
+
 	}
 	.img-gritting{
 		height: 3em;
 		width: auto;
 	}
+	#loading-anime{
+		margin: 2em auto;
+		display:flex;
+		flex-wrap: wrap;
+		width: 8em;
+		justify-content: space-around;
+		.small-circle{
+			background-color: $color2;
+			height: 0.6em;
+			width:0.6em;
+			border-radius: 200px;
+			opacity:0;
+		}
+	}
 }
+
 
 // Section 2
 
@@ -187,6 +204,7 @@
 				color:$color2;
 				h3{
 					font-weight:300;
+					margin:0;
 				}
 			}
 
