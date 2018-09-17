@@ -1,5 +1,6 @@
 // Base
-.wrapper{
+.desktop{display:none;}
+.mobile{
 	min-height: 100vh;
 	width: 100%;
 	position: relative;
@@ -100,7 +101,7 @@ section.current-section{
 // error messages
 
 .error-suburb{
-	display: none;
+	display:none;
 	background-color: $color1;
 	margin: 0 0.5em;
 	padding: 0 0.75em;
@@ -146,12 +147,16 @@ section.current-section{
 			border-radius: 0  0.25em 0 0;
 			min-height: 6em;
 			h1{
+				transition: all 1s ease;
 				font-size: 1.5em;
 				margin:0 1em;
 				padding: 0.25em 0;
 				border-bottom: $color1 solid 3px;
 				color: $dropdown-header-color;
 				font-weight:300;
+			}
+			h1.no-border{
+				border-bottom: none;
 			}
 		}
 		.selectplace-button{
@@ -210,9 +215,10 @@ section.current-section{
 
 			cursor: pointer;	
 			.choice-name {
-				margin-left:1em;
+				
 				color:$color2;
 				h1{
+					margin-left: 1.5em;
 					font-weight:300;
 				}
 			}
@@ -247,11 +253,134 @@ section.current-section{
 }
 
 @media only screen and (min-width: 40em) {
-
 }
 
-@media only screen and (min-width: 60em) {
-	
+@media only screen and (min-width: 50em) {
+	.margin-left{
+		margin-left: 1em;
+	}
+	.mobile{
+		display: none;
+	}
+	.desktop{
+		font-family:$font-main;
+		height: 100vh;
+		display:flex;
+		flex-direction: column;
+		header{
+			flex: 0 0 4em;
+			background-image: linear-gradient( -45deg, $color1 10%, lighten($color1,10%) 50%, darken($color1,8%));
+		}
+		.search-bar{
+			flex: 0 0 4em;
+			background-image: linear-gradient( 135deg, lighten($color1, 10%), lighten($color1,20%));
+		}
+		main{
+			flex: 1 0 30em;
+			background-color: $color2;
+			border: 1px red solid;
+		}
+		.header-wrapper,.search-wrapper,.main-wrapper{
+			max-width: 70em;
+			padding: 0 1em;
+			margin: auto;
+		}
+		.header-wrapper{
+			height:100%;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+
+			.logo-white{
+				align-self: center;
+				img {height: 2.75em;}
+			}
+			.tag-select{
+				align-self: flex-end;
+				background-color: lighten( $color1, 10%);
+				color: lighten( $color1, 30%);
+				border-radius: 5px 5px 0 0;
+				padding: 0.15em 1em;
+				font-size: 1.15em;
+			}
+			.media{
+				align-self: flex-end;
+				color: lighten( $color1, 25%);
+				font-size: 1.5em;
+				i {
+					padding: 0 0.15em;
+				}
+			}
+		}
+		.search-wrapper{
+			height: 100%;
+			.row{
+				height: 100%;
+				align-items: center;
+				.col-3{ padding-right: 1em;}
+			}
+			.dropdown{
+				border-radius: 5px;
+				background-color:$color2;
+				.dropdown-header{
+					color: $color1;
+					font-size: 1.25em;
+					padding: 0.25em 1em;
+				}
+				.dropdown-toggle{
+					position: relative;
+					&:after{
+						position: absolute;
+						right: 0%;
+						top:50%;
+						transform: translateY(-50%);
+						margin-right:1em;
+					}
+				}	
+			}
+			.selectplace-button{
+				border-radius: 5px;
+				padding: 0.25em 1em;
+				text-align: center;
+				background-image: linear-gradient( 135deg, darken($color1,10%),$color1);
+				img {height: 2em;}
+			}
+		}
+		.main-wrapper{
+			border: 1px blue solid;
+			height: 100%;
+			.row{
+				margin-top: 1em;
+				height:95%;
+				.col-3{ padding-right: 1em;}
+			}
+			#map-desktop{
+				height: 95%;
+				width: 100%;
+				border: 1px green solid;
+			}
+			.dropdown{
+				border-radius: 5px;
+				background-image: linear-gradient( 135deg, darken($color1,10%),$color1);
+				.dropdown-header{
+					color: $color2;
+					font-size: 1.25em;
+					padding: 0.25em 1em;
+				}
+				.dropdown-toggle{
+					position: relative;
+					&:after{
+						position: absolute;
+						right: 0%;
+						top:50%;
+						transform: translateY(-50%);
+						margin-right:1em;
+					}
+				}	
+			}
+		}
+
+	}
 }
 
 @media only screen and (min-width: 80em) {

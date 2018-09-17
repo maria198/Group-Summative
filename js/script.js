@@ -1,3 +1,4 @@
+
 // Loading page animation
 // Effect of loading 
 var loading = anime({
@@ -41,19 +42,23 @@ $(()=>{
 
 	//Drop-down list, select suburb
 	var suburbSelected = '';
-	$('.dropdown-item').each(function(){
+	$('.dropdown-item-mobile').each(function(){
  		$(this).on('click',function(){
  			suburbSelected = $(this).text();
- 			$('.dropdown-header').html(suburbSelected);
+ 			$('#dropdown-header-mobile').html(suburbSelected);
  		});
  	});
  	
  	// Navigation
  	// Explore button, from section2 to section3, change header in section3
  	$('#explore').on('click', function(){
+ 		// Error message
  		if(suburbSelected == ''){
- 			$('.erroe-suburb').css('display','block');
+ 			$('.selectplace-dropdown h1').addClass('no-border');
+ 			$('.error-suburb').slideDown();
  		}else{
+ 			$('.error-suburb').slideUp();
+ 			$('.selectplace-dropdown h1').delay(300).removeClass('no-border');
  			$('.location-title').find('h1').text(suburbSelected);
 	 		$('.current-section').removeClass('current-section');
 	 		$('.section-3').addClass('current-section');
@@ -79,13 +84,18 @@ $(()=>{
  		$('.section-3').addClass('current-section');
  	});
 
- 	// Map
+ 	// Map-mobile
  	var center = {lat: -45.031449, lng: 168.661904};
- 	var map = L.map('map').setView(center, 17);
+ 	var mapMobile = L.map('map').setView(center, 17);
 
- 	L.tileLayer('https://api.mapbox.com/styles/v1/mary-trepakova/cjkna5n1g221w2tmt0g2tsz5o/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWFyeS10cmVwYWtvdmEiLCJhIjoiY2pra2V6cHRzMDEzbDNqczc5NjF0aWptbiJ9.f52j7_rFo6_WhBh3aD3QKw').addTo(map);
+ 	L.tileLayer('https://api.mapbox.com/styles/v1/mary-trepakova/cjkna5n1g221w2tmt0g2tsz5o/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWFyeS10cmVwYWtvdmEiLCJhIjoiY2pra2V6cHRzMDEzbDNqczc5NjF0aWptbiJ9.f52j7_rFo6_WhBh3aD3QKw').addTo(mapMobile);
 
- 	
+ 	// Map-desktop
+ 	var center = {lat: -45.031449, lng: 168.661904};
+ 	var mapDesktop = L.map('map-desktop').setView(center, 17);
+
+ 	L.tileLayer('https://api.mapbox.com/styles/v1/mary-trepakova/cjkna5n1g221w2tmt0g2tsz5o/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWFyeS10cmVwYWtvdmEiLCJhIjoiY2pra2V6cHRzMDEzbDNqczc5NjF0aWptbiJ9.f52j7_rFo6_WhBh3aD3QKw').addTo(mapDesktop);
+
 });
 
 
