@@ -1,4 +1,5 @@
 // Base
+
 .header, .footer{
 	background-color: $color2;
 	height:$headerfooterheight;
@@ -8,7 +9,7 @@
 	justify-content:space-between;
 }
 .header {
-	border-bottom: medium $color1 solid;
+	border-bottom: medium $color3 solid;
 }
 
 .logo{
@@ -24,7 +25,7 @@
 
 
 .back-btn { 
-	color: $color1;
+	color: $color3;
 	box-sizing:border-box;
 	padding:1em;
 
@@ -48,7 +49,7 @@
 	background-color: $color1;
 	position: relative;
 
-	.content{
+	.hello{
 		position: absolute;
 		left:50%;
 		top:50%;
