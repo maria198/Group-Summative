@@ -42,10 +42,10 @@
 					<div class="dropdown">
 					  	<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Locations </button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-							<button class="dropdown-item" type="button" data-lng="174.764492" data-lat="-36.850899">Auckland Central</button>
-							<button class="dropdown-item" type="button" data-lng="174.716289" data-lat="-36.716947">Rodney & North Shore</button>
-							<button class="dropdown-item" type="button" data-lng="174.630303" data-lat="-36.879294">Waitakere & West Auckland</button>
-							<button class="dropdown-item" type="button" data-lng="174.889188" data-lat="-36.953047">Manukau & East Auckland</button>
+							<button class="dropdown-item" type="button" data-lng="174.762769" data-lat="-36.853727">Auckland Central</button>
+							<button class="dropdown-item" type="button" data-lng="174.707249" data-lat="-36.728093">Rodney & North Shore</button>
+							<button class="dropdown-item" type="button" data-lng="174.689640" data-lat="-36.898363">Waitakere & West Auckland</button>
+							<button class="dropdown-item" type="button" data-lng="174.912638" data-lat="-36.933607">Manukau & East Auckland</button>
 							<button class="dropdown-item" type="button" data-lng="174.902504" data-lat="-37.202446">Pukekohe & Franklin</button>					
 						</div>
 					</div>
@@ -73,7 +73,7 @@
 
 			<div class="accordion choices-list">
 
-				<div class="choices row popular" data-choice="food">
+				<div class="choices row popular" data-choice="trending">
 					<div class="choice-name">
 						<h3>Popular</h3>
 					</div>
@@ -89,7 +89,7 @@
 						<i class="fas fa-hotel"></i>
 					</div>
 				</div>
-				<div class="choices row arts-culture" data-choice="4d4b7104d754a06370d81259">
+				<div class="choices row arts-culture" data-choice="arts">
 					<div class="choice-name">
 						<h3>Arts & Culture</h3>
 					</div>
@@ -97,7 +97,7 @@
 						<i class="fas fa-theater-masks"></i>
 					</div>
 				</div>
-				<div class="choices row buses" data-choice="Buses">
+				<div class="choices row buses" data-choice="busstop">
 					<div class="choice-name">
 						<h3>Buses</h3>
 					</div>
@@ -105,7 +105,7 @@
 						<i class="fas fa-bus-alt"></i>
 					</div>
 				</div>
-				<div class="choices row food-beverage" data-choice="Eateries">
+				<div class="choices row food-beverage" data-choice="food">
 					<div class="choice-name">
 						<h3>Food & Beverages</h3>
 					</div>
@@ -113,7 +113,7 @@
 						<i class="fas fa-coffee"></i>
 					</div>
 				</div>
-				<div class="choices row parks-walks" data-choice="Parks">
+				<div class="choices row parks-walks" data-choice="outdoors">
 					<div class="choice-name">
 						<h3>Parks & Walks</h3>
 					</div>
@@ -146,6 +146,27 @@
 			</div>
 			
 			<div id="map">
+				<div class="modal" id='venueModal' tabindex="-1" role="dialog">
+					<div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      	<div class="modal-header">
+					        	<h4 class="modal-title">Modal title</h4>
+					        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          		<span aria-hidden="true">&times;</span>
+					        	</button>
+					      	</div>
+					      	<div class="modal-body">
+
+					        	<p>Modal body text goes here.</p>
+
+					      	</div>
+<!-- 					      	<div class="modal-footer">
+						        <button type="button" class="btn btn-primary">Save changes</button>
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					      	</div> -->
+					    </div>
+					</div>
+				</div>
 			</div>
 
 			<div class="footer">
@@ -168,5 +189,8 @@
 	<script src="vendore/tilt/tilt.js"></script>
 	<script src="vendore/underscore/underscore.js"></script>
 	<script src="js/script.js"></script>
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDknEtmtQzCjjFGOAJiHVFKcBegAsUBUKc&callback=initMap"
+    async defer></script>
 </body>
 </html>

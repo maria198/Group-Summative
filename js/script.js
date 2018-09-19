@@ -9,7 +9,7 @@ var lat, lng;
 $(()=>{
  	
  	let center = [-36.8446152873055,174.76662397384644];
- 	let map = L.map('map',{zoomControl:true,scrollWheelZoom:false}).setView(center, 17);
+ 	let map = L.map('map',{zoomControl:true,scrollWheelZoom:false}).setView(center, 15);
 
  	L.tileLayer('https://api.mapbox.com/styles/v1/mary-trepakova/cjkna5n1g221w2tmt0g2tsz5o/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWFyeS10cmVwYWtvdmEiLCJhIjoiY2pra2V6cHRzMDEzbDNqczc5NjF0aWptbiJ9.f52j7_rFo6_WhBh3aD3QKw').addTo(map);
  	
@@ -18,14 +18,14 @@ $(()=>{
 	setTimeout(function(){ 
 		$('.section-0').hide();
 		$('.section-0').next().show(); 
-	}, 2000);
+	}, 3500);
 
  	let locateMe = $('.dropdown-item').on('click', function(){
 
  		lat = $(this).data('lat');
  		lng = $(this).data('lng');
 
- 		map.setView(new L.LatLng(lat, lng), 17);
+ 		map.setView(new L.LatLng(lat, lng), 15);
 
  		let location = $(this)[0].innerText;
  		console.log(location);
@@ -49,73 +49,77 @@ $(()=>{
  		$(this).closest('section').next().slideDown();
 	 	$(this).closest('section').hide();
 
- 		let exploreUrl = 'https://api.foursquare.com/v2/venues/explore'+key+'&ll='+lat+','+lng+'&section='+choice;
 
- 		console.log(exploreUrl);
+	 	// if(choice == 'busstop'){
+
+	 	// }else{
+
+	 	// }
+ 		let exploreUrl = 'https://api.foursquare.com/v2/venues/explore'+key+'&ll='+lat+','+lng+'&section='+choice;
 
  		$.ajax({
 			url:exploreUrl,
-			dataType:'jsonp', // json p means browser can ask for data instead of server
+			dataType:'jsonp', 
 			success:function(res){
-				var data = res.response.groups["0"].items;//this code after res came from console, right clicking items under group and
-				//copy property path
-				// var venues = _(data).map(function(item){ // this function is to transform each item into smaller pieces of data. these items/venues have alot of data 
-				// 	//in the console. Also called mapping data
-				// 	return{
-				// 		latlng:{lat:item.venue.location.lat,lng:item.venue.location.lng},
-				// 		name:item.venue.name,
-				// 		venueid:item.venue.id
-				// 	};
+				let data = res.response.groups["0"].items;
 
-				// });
+				console.log(data);
+
+				let venues = _(data).map(function(item){
+					return {
+						latlng:{lat:item.venue.location.lat,lng:item.venue.location.lng},
+						name:item.venue.name,
+						venueid:item.venue.id
+					};
+				});
+
+				console.log(venues);
+
+				_(venues).each(function(venue){
+					let venueIcon = L.icon({
+						iconUrl:'assets/icons/marker.svg',
+						iconSize:[50,50]
+					});
+
+					let marker = L.marker(venue.latlng,{icon:venueIcon}).addTo(map);
+					marker.venueid = venue.venueid;
+					console.log(marker);
+
+					marker.on('click',function(){
+						let venueUrl = 'https://api.foursquare.com/v2/venues/'+this.venueid+key;
+
+						$.ajax({
+							url:venueUrl,
+							dataType:'jsonp',
+							success:function(res){
+								let venue = res.response.venue;
+
+								$('.modal-title').text(venue.name);
+								let photo = venue.bestPhoto;
+								let source = photo.prefix+'100x100'+photo.suffix;
+								let contact = venue.contact.phone;
+								let address = venue.location.address;
+								let hours = venue.hours;
+								let url = venue.url;
+								$('.modal-body').empty();
+								$('<img src="'+source+'">').appendTo('.modal-body');
+								$('<p><a href="tel:'+contact+'">Phone: '+contact+'</a></p>').appendTo('.modal-body');
+								$('<p>Address: '+address+'</p>').appendTo('.modal-body');
+								$('<p>Hours: '+hours+'</p>').appendTo('.modal-body');
+								$('<a href='+url+'>Website</a>').appendTo('.modal-body');
+								$('#venueModal').modal('show');
+							}
+						});
+
+					});
+				
+				});
 			}
 
  		});
 
- 		console.log(data);
+	
 
-
-		console.log(venues);
-
-		_(venues).each(function(venue){
-			let venueIcon = L.icon({
-				iconUrl:'assets/icons/cafe.svg',
-				iconSize:[30,30]
-			});
-			let marker = L.marker(venue.latlng,{icon:venueIcon}).addTo(map);
-			marker.venueid = venue.venueid;
-			console.log(marker);
-
-			marker.on('click',function(){
-				let venueUrl = 'https://api.foursquare.com/v2/venues/'+this.venueid+key;
-
-				// $.ajax({
-				// 	url:venueUrl,
-				// 	dataType:'jsonp',
-				// 	success:function(res){
-				// 		var venue = res.response.venue;
-
-				// 		$('.modal-title').text(venue.name);
-				// 		var photo = venue.bestPhoto; //find where to go from dom inspection
-				// 		var source = photo.prefix+'100x100'+photo.suffix;
-				// 		var contact = venue.contact.phone;
-				// 		var address = venue.location.address;
-				// 		var category = venue.categories.name;
-				// 		$('.modal-body').empty();
-				// 		$('<img src="'+source+'">').appendTo('.modal-body');
-				// 		$('<p>Phone:'+contact+'</p>').appendTo('.modal-body');
-				// 		$('<p>Address:'+address+'</p>').appendTo('.modal-body');
-				// 		$('<p>category:'+category+'</p>').appendTo('.modal-body');
-
-
-
-
-				// 		$('#venueModal').modal('show');
-				// 	}
-				// });
-
-			});
-		});
 		
 	});
 

@@ -183,6 +183,31 @@
 	#map {
 		flex:
 		1 0 20em;
+
+		.modal {
+			color:$color1;
+			font-size: 1.5em;
+
+			.modal-content {
+				background-color: $color2;
+				text-align: center;
+					a{
+						color: $color1;
+						text-decoration: underline;;
+					}
+
+				.modal-header {
+					h4{
+						color: $color3;
+						margin: auto;
+					}
+
+					.close {
+						margin: -1rem -1rem -1rem -1rem;
+					}
+				}
+			}
+		}
 	}
 }
 
