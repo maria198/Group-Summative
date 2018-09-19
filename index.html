@@ -83,7 +83,7 @@
 
 			<div class="choices-list">
 
-				<div class="choices row popular">
+				<div class="choices row" data-keyword="popular">
 					<div class="choice-name">
 						<h1>Popular</h1>
 					</div>
@@ -91,7 +91,7 @@
 						<i class="fas fa-star"></i>
 					</div>
 				</div>
-				<div class="choices row accomodation">
+				<div class="choices row" data-keyword="accomondation">
 					<div class="choice-name">
 						<h1>Accomodation</h1>
 					</div>
@@ -99,7 +99,7 @@
 						<i class="fas fa-hotel"></i>
 					</div>
 				</div>
-				<div class="choices row arts-culture">
+				<div class="choices row" data-keyword="arts&entertainment">
 					<div class="choice-name">
 						<h1>Arts & Culture</h1>
 					</div>
@@ -107,7 +107,7 @@
 						<i class="fas fa-theater-masks"></i>
 					</div>
 				</div>
-				<div class="choices row buses">
+				<div class="choices row" data-keyword="buses">
 					<div class="choice-name">
 						<h1>Buses</h1>
 					</div>
@@ -115,7 +115,7 @@
 						<i class="fas fa-bus-alt"></i>
 					</div>
 				</div>
-				<div class="choices row food-beverage">
+				<div class="choices row" data-keyword="food">
 					<div class="choice-name">
 						<h1>Food & Beverages</h1>
 					</div>
@@ -123,7 +123,7 @@
 						<i class="fas fa-coffee"></i>
 					</div>
 				</div>
-				<div class="choices row parks-walks">
+				<div class="choices row" data-keyword="park&tree">
 					<div class="choice-name">
 						<h1>Parks & Walks</h1>
 					</div>
@@ -153,6 +153,26 @@
 			</div>
 			
 			<div id="map">
+			</div>
+
+			<div id="venueModal" class="modal" tabindex="-1" role="dialog">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title">Modal title</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <p>Modal body text goes here.</p>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-primary">Save changes</button>
+			      </div>
+			    </div>
+			  </div>
 			</div>
 
 			<div class="footer">
