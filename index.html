@@ -154,26 +154,17 @@
 			
 			<div id="map">
 			</div>
-
-			<div id="venueModal" class="modal" tabindex="-1" role="dialog">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title">Modal title</h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			      </div>
-			      <div class="modal-body">
-			        <p>Modal body text goes here.</p>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-primary">Save changes</button>
-			      </div>
-			    </div>
-			  </div>
+			
+			<div class="venue-info" id="venueInfo">
+				<div class="info-panel">
+					<i class="fas fa-directions"></i>
+					<i class="fas fa-times" id="closeVenueInfo"></i>
+				</div>
+				<div class="info-content venue-info-container">
+					
+				</div>
 			</div>
+			
 
 			<div class="footer">
 				<div id="back-section3" class="back-btn">
@@ -185,6 +176,7 @@
 			</div>
 		</section>
 	</div>
+
 
 	<!-- <div class="desktop">
 		<header>
@@ -257,6 +249,16 @@
 			</div>
 		</main>
 	</div> -->
+	
+	<!-- Template for venue -->
+	<script id="templateVenueInfo" type="text/template7">
+		<div class="content-text">
+			<h3 class="venue-name">{{name}}</h3>
+			<h4 class="venue-address">{{location.address,location.crossStreet}}</h4>
+			<div class="venue-rate">1 1 1 1 1</div>
+		</div>
+		<div class="content-venue-photo"></div>
+	</script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"></script>
@@ -264,6 +266,7 @@
 	<script src="vendore/popper/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="vendore/underscore/underscore.js"></script>
+	<script src="vendore/template7/template7.js"></script>
 	<script src="vendore/anime/anime.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="assets/data/auckland-suburbs.js"></script>

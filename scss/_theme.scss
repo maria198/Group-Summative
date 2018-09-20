@@ -255,8 +255,49 @@ section.current-section{
 		1 0 20em;
 	}
 }
+// Popup for venue
+.venue-info{
+	position: absolute;
+	width: 100%;
+	z-index: 1050;
+	bottom:  3.75em;
+	.info-panel{
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		background-color: $color2;
+		color: $color1;
+		padding: 0 0.75em;
+		i{
+			font-size: 1.5em;
+			padding: 0.25em;
+		}
+	}
+	.info-content{
+		background-color: #777;
+		color: $color2;
+		padding: 0.25em 1em;
+	}
+}
+
 
 @media only screen and (min-width: 40em) {
+	.venue-info{
+		display: none;
+		width: 80%;
+		max-width: 30em;
+		left: 50%;
+		bottom: 5em;
+		transform: translate(-50%);	
+		box-shadow: $shadow;
+		.info-panel{
+			@include border-top-radius($radius);
+		}
+		.info-content{
+			@include border-bottom-radius($radius);
+		}
+	}
 }
 
 @media only screen and (min-width: 50em) {

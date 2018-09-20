@@ -133,12 +133,13 @@ $(()=>{
 			layerGroup.addLayer(oSuburbPolygon);
 			// Get centre of polyline
 			polylineCenter = oSuburbPolygon.getCenter();
-			L.circle(polylineCenter, {
+			var suburbArea = L.circle(polylineCenter, {
 						radius: radiusFoursquare,
 						color: 'salmon',
 						weight:1,
 						fill:true
-					}).addTo(map);
+					});
+			layerGroup.addLayer(suburbArea);
 			console.log(polylineCenter);
 			// Position map view 
 			map.fitBounds(oSuburbPolygon.getBounds());
@@ -166,9 +167,12 @@ $(()=>{
  		});
  	});
  	var markerLayer = L.layerGroup().addTo(map);
+
+ 	let VenueInfoHTML = $('#templateVenueInfo').text();
+ 	let VenueInfoTemplate = Template7(VenueInfoHTML).compile();
  	$('.mobile').on('click','.choices', function(){
  		markerLayer.clearLayers();
- 		let urlProjects = 'https://api.foursquare.com/v2/venues/search'+key+'&ll='+polylineCenter.lat+','+polylineCenter.lng+'&radius='+radiusFoursquare+'&limit=50&categoryId='+categoryId;
+ 		let urlProjects = 'https://api.foursquare.com/v2/venues/search'+key+'&ll='+polylineCenter.lat+','+polylineCenter.lng+'&radius='+radiusFoursquare+'&limit=10&categoryId='+categoryId;
 			$.ajax({
 				url: urlProjects,
 				dataType: 'jsonp',
@@ -190,13 +194,11 @@ $(()=>{
 						});
 						let marker = L.marker(venue.latlng,{icon: venueIcon});
 						markerLayer.addLayer(marker);
+						marker.venueId = venue.venueid;
 
-						marker.venueId = venue.venueId;
-
-						//modal popup bootstrap
+						// popup venue-info
 						marker.on('click',function(){
 							var venueUrl = 'https://api.foursquare.com/v2/venues/'+this.venueId+key;
-
 							$.ajax({
 								url: venueUrl,
 								dataType: 'jsonp',
@@ -204,17 +206,17 @@ $(()=>{
 									var venue = res.response.venue;
 									console.log(venue);
 
-									$('.modal-title').text(venue.name);
+									var output = VenueInfoTemplate(venue);
+									$('.venue-info-container').empty();
+									$('.venue-info-container').append(output);
 
-									let photo = venue.bestPhoto;
-									let photoUrl = photo.prefix+'300x300'+photo.suffix;
 
-									$('.modal-body').empty();
-									$('<img src="'+photoUrl+'">').appendTo('.modal-body');
 								}
 							});
-							
-							$('#venueModal').modal('show');
+							$('#venueInfo').show(400);
+							$('#closeVenueInfo').on('click', function(){
+								$('#venueInfo').slideUp();
+							});
 						});
 					});
 				}
