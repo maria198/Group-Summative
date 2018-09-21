@@ -111,7 +111,7 @@ $(()=>{
 						marker.on('click',function(){
 							// console.log(this.venueid);
 							var venueUrl = 'https://api.foursquare.com/v2/venues/'+this.venueid+key;
-							var venueHours = 'https://api.foursquare.com/v2/venues/'+this.venueid+'/hours'+key;
+							// var venueHours = 'https://api.foursquare.com/v2/venues/'+this.venueid+'/hours'+key;
 
 							// console.log(venueUrl);
 							// console.log(venueHours);
@@ -119,16 +119,21 @@ $(()=>{
 								url:venueUrl,
 								dataType:'jsonp',
 								success:function(res){
-									console.log(res);
 									var venue = res.response.venue;
 									console.log(venue);
-									$('.modal-title').text(venue.name);
 
 									var photos = venue.bestPhoto;
-									console.log(photos);
-									var source = photos.prefix+'100x100'+photos.suffix;
-									$('.modal-body').empty();
-									$('<img src="'+source+'">').appendTo('.modal-body');
+									var source = photos.prefix+'150x150'+photos.suffix;
+
+									$('.img-here, .choice-info').empty();
+
+									$('<img src="'+source+'">').appendTo('.img-here');
+
+									let bioHTML = $('#templateChoices').text();
+									let bioTemplate = Template7(bioHTML).compile();
+									var bioOutput = bioTemplate(venue);
+									console.log(venue);
+									$('.choice-info').append(bioOutput);
 
 									$('#venue-modal').modal('show');
 								}

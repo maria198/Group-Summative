@@ -1,4 +1,12 @@
 // Base
+* a{
+	color:$color2;
+}
+
+.icons{
+	display:none;
+}
+
 .header, .footer{
 	background-color: $color2;
 	height:$headerfooterheight;
@@ -278,7 +286,29 @@
 				}
 				.modal-body{
 					padding:0;
-					height:25vh;
+					height:100%;
+					display:flex;
+					flex-wrap:wrap;
+					justify-content:space-between;
+					.choice-info{
+						flex:0 0 10em;
+						margin:2%;
+						display:flex;
+						justify-content:space-around;
+						flex-direction:column;
+						h2, h4{
+							line-height: 1em;
+						}
+						.direction-link{
+							padding:2%;
+							border-radius: $radius;
+							background-color:$color3;
+							text-align: center;
+							a {
+								color:$color2;
+							}
+						}
+					}
 				}
 			}
 
