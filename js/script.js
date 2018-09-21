@@ -9,6 +9,7 @@ let lngCurrent = [];
 let choiceCurrent = [];
 
 let venueCurrent = [];
+
 // Loading page animation
 // Effect of loading 
 var loading = anime({
@@ -105,7 +106,10 @@ $(()=>{
 							iconSize:[10,10],
 						});
 
+
 						let marker = L.marker(venue.latlng,{icon:venueIcon}).addTo(map);
+
+
 
 						marker.venueid = venue.venueid;
 						marker.on('click',function(){
@@ -150,6 +154,14 @@ $(()=>{
 
 						});
 
+
+					 	// Clicking on back btn & logo will remove markers
+					 	$('.section .back-btn, .logo').on('click',function(){
+
+					 		map.removeLayer(marker);
+
+					 	});
+
 					});
 				},
 
@@ -160,6 +172,7 @@ $(()=>{
  	$('.logo').on('click',function(){
  		$('.section-2').slideDown();
  		$(this).closest('section').hide();
+
  	});
 
  	// Clicking on back btn returns user to previous section
@@ -167,8 +180,7 @@ $(()=>{
 
  		$(this).closest('section').prev().slideDown();
  		$(this).closest('section').hide();
- 		
-		
+
  	});
 
 });
