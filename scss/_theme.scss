@@ -257,6 +257,7 @@ section.current-section{
 }
 // Popup for venue
 .venue-info{
+	display: none;
 	position: absolute;
 	width: 100%;
 	z-index: 1050;
@@ -278,13 +279,19 @@ section.current-section{
 		background-color: #777;
 		color: $color2;
 		padding: 0.25em 1em;
+
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
+	.content-text{
+		flex: 1 0 3em;
 	}
 }
 
 
 @media only screen and (min-width: 40em) {
 	.venue-info{
-		display: none;
 		width: 80%;
 		max-width: 30em;
 		left: 50%;

@@ -44,8 +44,8 @@ let dropDown = new Vue({
 
 //FourSquare Client Id,key
 const version = '?v=20170901';
-const clientid = '&client_id=FP1I4WJSN14C1CP41SACQI3F1KSH4I0IJDO1IYKCKZBDKZIO';
-const clientSecret = '&client_secret=CJHT5MHLZSEAU2NXKOT1IVTQJAGG1TH1C11VAPK5DFIYPRVC';
+const clientid = '&client_id=RPGUL25RSMX1OOV0ZFGA3OGD0IF5XKQB0SA4RWEC1VIHWTHF';
+const clientSecret = '&client_secret=UY2ZX5BNM03Z0SIHI4CPLHI4PMAW1PS01ZLK2D2NOV14DVL4';
 const key = version + clientid + clientSecret;
 
 // Data: foursquare id,icons for categories
@@ -77,10 +77,17 @@ var categories = [
 	},
 	{
 		categoryKeyword: 'popular',
-		categoryId: '4d4b7105d754a06374d81259',
 		iconUrl: 'assets/markers/icon-popular.svg'
 	}
 ];
+// Initialize map
+var center = {lat: -45.031449, lng: 168.661904};
+var map = L.map('map').setView(center, 17);
+
+// variable to keep destination coordinates
+var destination;
+// Layer for a route polyline
+var routeLayer = L.layerGroup().addTo(map);
 // JQuery
 $(()=>{
 
@@ -100,10 +107,7 @@ $(()=>{
  		});
  	});
  	
-
  	// Map-mobile
- 	var center = {lat: -45.031449, lng: 168.661904};
- 	var map = L.map('map').setView(center, 17);
  	L.tileLayer('https://api.mapbox.com/styles/v1/mary-trepakova/cjkna5n1g221w2tmt0g2tsz5o/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWFyeS10cmVwYWtvdmEiLCJhIjoiY2pra2V6cHRzMDEzbDNqczc5NjF0aWptbiJ9.f52j7_rFo6_WhBh3aD3QKw').addTo(map);
  	var layerGroup = L.layerGroup().addTo(map);
  	var polylineCenter;
@@ -125,7 +129,7 @@ $(()=>{
 	 		layerGroup.clearLayers();
 	 		// Draws polyline around chosen suburb
 	 		var oSuburbPolygon = L.polygon( oSuburb.geometry, {
-				color: '#FE5F55',
+				color: '#289F8E',
 				weight: 2,
 				fill: false
 			});
@@ -172,7 +176,14 @@ $(()=>{
  	let VenueInfoTemplate = Template7(VenueInfoHTML).compile();
  	$('.mobile').on('click','.choices', function(){
  		markerLayer.clearLayers();
- 		let urlProjects = 'https://api.foursquare.com/v2/venues/search'+key+'&ll='+polylineCenter.lat+','+polylineCenter.lng+'&radius='+radiusFoursquare+'&limit=10&categoryId='+categoryId;
+ 		routeLayer.clearLayers();
+ 		let urlProject;
+ 		if (categoryKeyword == 'popular'){
+ 			urlProjects = 'https://api.foursquare.com/v2/venues/trending'+key+'&ll='+polylineCenter.lat+','+polylineCenter.lng+'&radius='+radiusFoursquare+'&limit=10';
+ 			console.log(urlProjects);
+ 		}else{
+ 			urlProjects = 'https://api.foursquare.com/v2/venues/search'+key+'&ll='+polylineCenter.lat+','+polylineCenter.lng+'&radius='+radiusFoursquare+'&limit=10&categoryId='+categoryId;
+ 		}
 			$.ajax({
 				url: urlProjects,
 				dataType: 'jsonp',
@@ -204,13 +215,22 @@ $(()=>{
 								dataType: 'jsonp',
 								success: function(res){
 									var venue = res.response.venue;
-									console.log(venue);
+									console.log(res);
+									//get coordinates for google direction
+									destination = {lat:venue.location.lat,lng:venue.location.lng};
 
+									console.log(destination);
+									$('.content-venue-photo').empty();
 									var output = VenueInfoTemplate(venue);
 									$('.venue-info-container').empty();
 									$('.venue-info-container').append(output);
 
-
+									//get photo if it exists
+									let photo = venue.bestPhoto;
+									if( photo != undefined){
+										let photoUrl = photo.prefix+'150x150'+photo.suffix;
+										$('<img src="'+photoUrl+'">').appendTo('.content-venue-photo');
+									} 
 								}
 							});
 							$('#venueInfo').show(400);
@@ -234,9 +254,60 @@ $(()=>{
  		$('.current-section').removeClass('current-section');
  		$('.section-3').addClass('current-section');
  	});
- 	
- 	
 });
+
+// googlemaps direction
+var oRoute = document.querySelector('#getDirection');
+// var routeLayer = L.layerGroup().addTo(map);
+function initMap(){
+	oRoute.addEventListener('click', function(){
+		routeLayer.clearLayers();
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(position => {
+	          	var userLocation = {
+	          		lat: position.coords.latitude,
+	          		lng: position.coords.longitude
+	          	};
+	          	console.log(userLocation);
+	          	// marker for user location
+	          	let userIcon = L.icon({
+							iconUrl: '../assets/markers/icon-user.svg',
+							iconSize: [40,40]
+						});
+				let marker = L.marker(userLocation,{icon: userIcon});
+				routeLayer.addLayer(marker);
+
+				// direction service
+				var directionsService = new google.maps.DirectionsService();
+
+			    //-- create a request for directions
+			    var request = {
+						    origin: userLocation,
+						    destination: destination,
+						    travelMode: 'DRIVING'
+						  };
+
+			    // -- ask directionsService to fulfill your request
+			    directionsService.route(request, function(response,status){
+			        var path = response.routes["0"].overview_path;	
+
+			        //---converts one list of a certain type in another list - mapping
+			        var polyline =  _(path).map(function(item){
+			        	return {lat: item.lat(),lng: item.lng()};
+			        });
+			        // //New format
+			        let myRoute = L.polyline(polyline,{
+						color: '#FE5F55',
+						weight: 3
+					});
+					routeLayer.addLayer(myRoute);
+					map.fitBounds(myRoute.getBounds());
+			    });
+		    });	
+		}
+	});
+};
+
 
 
 

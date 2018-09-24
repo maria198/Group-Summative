@@ -157,7 +157,7 @@
 			
 			<div class="venue-info" id="venueInfo">
 				<div class="info-panel">
-					<i class="fas fa-directions"></i>
+					<i class="fas fa-directions" id="getDirection"></i>
 					<i class="fas fa-times" id="closeVenueInfo"></i>
 				</div>
 				<div class="info-content venue-info-container">
@@ -271,5 +271,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="assets/data/auckland-suburbs.js"></script>
 	<script src="js/script.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDknEtmtQzCjjFGOAJiHVFKcBegAsUBUKc&callback=initMap"
+    async defer></script>
 </body>
 </html>
