@@ -46,7 +46,7 @@
 		font-size:$button-size;
 	}
 }
-	
+
 .section{
 	height: 100vh;
 	width: 100vw;
@@ -124,59 +124,59 @@
 			border-top-left-radius: $radius;
 			border-top-right-radius: $radius;
 
-				p {
-					margin: 0;
-					font-size: 1em;
-				}
+			p {
+				margin: 0;
+				font-size: 1em;
+			}
 		}
 		.location {
 			
 			max-width: 90vw;
 
-				.dropdown-toggle {
-					background-color: $color2;
-					color: $color3;
-					width: 100%;
-					font-size:1.2em;
-					border-radius:0;
-					border-top-right-radius: $radius;
-					padding:0.6em;
-					&:focus{
-						color:$color1;
-						box-shadow: none;
-					}
-
-				}
-				.dropdown-menu {
-					width:100%;
-					border-radius:0;
-					background-color:$color2;
-					margin:0;
-					border:none;
-					border-bottom-right-radius: $radius;
-					border-bottom-left-radius: $radius;
-					button{
-						color:$color3;
-						text-indent: 10%;
-						padding:0.5em 0 0.5em 0;
-					}
-				}
-				.btn-secondary{
-					border:none;
+			.dropdown-toggle {
+				background-color: $color2;
+				color: $color3;
+				width: 100%;
+				font-size:1.2em;
+				border-radius:0;
+				border-top-right-radius: $radius;
+				padding:0.6em;
+				&:focus{
+					color:$color1;
+					box-shadow: none;
 				}
 
-				.explore{
-					background-color: $color1;
-					text-align: center;
-					padding: 0.5em;
-					border-bottom-right-radius: $radius;
-					border-bottom-left-radius: $radius;
-
-					
-					img {
-						width: 30%;
-					}
+			}
+			.dropdown-menu {
+				width:100%;
+				border-radius:0;
+				background-color:$color2;
+				margin:0;
+				border:none;
+				border-bottom-right-radius: $radius;
+				border-bottom-left-radius: $radius;
+				button{
+					color:$color3;
+					text-indent: 10%;
+					padding:0.5em 0 0.5em 0;
 				}
+			}
+			.btn-secondary{
+				border:none;
+			}
+
+			.explore{
+				background-color: $color1;
+				text-align: center;
+				padding: 0.5em;
+				border-bottom-right-radius: $radius;
+				border-bottom-left-radius: $radius;
+
+				
+				img {
+					width: 30%;
+				}
+			}
 		}
 	}
 	
@@ -206,7 +206,7 @@
 			align-items:center;
 			justify-content:space-between;
 
-				
+			
 			.choice-name {
 				margin-left:1em;
 				color:$color2;
