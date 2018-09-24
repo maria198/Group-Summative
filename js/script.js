@@ -4,8 +4,9 @@ const clientid = '&client_id=DX131ZQSFRPLAGRPEQZJCFFUJQN0N0JZMD04A24GAIWFUPYI';
 const clientSecret = '&client_secret=IVX1Q1PKRFQZXPK2UYWXOHPXVBNYP4SJ1TS4XOIZR15LODFN';
 const key = version + clientid + clientSecret;
 const ATkey = '2f0c1b52e45a4d16bd76190029149cf1';
-
-var lat, lng;
+let directionsService;
+let lat, lng;
+let markersLayer;
 
 $(()=>{
  	
@@ -14,6 +15,10 @@ $(()=>{
 
  	L.tileLayer('https://api.mapbox.com/styles/v1/mary-trepakova/cjkna5n1g221w2tmt0g2tsz5o/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWFyeS10cmVwYWtvdmEiLCJhIjoiY2pra2V6cHRzMDEzbDNqczc5NjF0aWptbiJ9.f52j7_rFo6_WhBh3aD3QKw').addTo(map);
  	
+ 	markersLayer = L.layerGroup().addTo(map);
+
+ 	let directionsLayerGroup = L.layerGroup().addTo(map);
+
  	$('.section-0').nextAll().hide();
 
 	setTimeout(function(){ 
@@ -63,6 +68,7 @@ $(()=>{
 	            },
 	            success:function(res){
 	            	
+	            	markersLayer.clearLayers();
 	            	let busdata = res.response;
 
 	               	_(busdata).each(function(stop){
@@ -76,7 +82,7 @@ $(()=>{
 	               			lng:stop.stop_lon
 	               		};
 
-	               		let busStopMarker = L.marker(latlng,{icon:stopIcon}).addTo(map);
+	               		let busStopMarker = L.marker(latlng,{icon:stopIcon}).addTo(markersLayer);
 	               		busStopMarker.data = stop;
 
 	               		
@@ -106,6 +112,7 @@ $(()=>{
 				url:exploreUrl,
 				dataType:'jsonp', 
 				success:function(res){
+					markersLayer.clearLayers();
 					let data = res.response.groups["0"].items;
 
 					console.log(data);
@@ -126,8 +133,11 @@ $(()=>{
 							iconSize:[50,50]
 						});
 
-						let marker = L.marker(venue.latlng,{icon:venueIcon}).addTo(map);
+						let marker = L.marker(venue.latlng,{icon:venueIcon}).addTo(markersLayer);
 						marker.venueid = venue.venueid;
+
+						
+						
 						console.log(marker);
 
 						marker.on('click',function(){
@@ -148,11 +158,66 @@ $(()=>{
 									let url = venue.url;
 									$('.modal-body').empty();
 									$('<img src="'+source+'">').appendTo('.modal-body');
-									$('<p><a href="tel:'+contact+'">Phone: '+contact+'</a></p>').appendTo('.modal-body');
+
+									if(contact){
+										$('<p><a href="tel:'+contact+'">Phone: '+contact+'</a></p>').appendTo('.modal-body');
+									}
 									$('<p>Address: '+address+'</p>').appendTo('.modal-body');
-									$('<p>Hours: '+hours+'</p>').appendTo('.modal-body');
-									$('<a href='+url+'>Website</a>').appendTo('.modal-body');
+
+									if(hours){
+										$('<p>Hours: '+hours+'</p>').appendTo('.modal-body');
+									}
+									
+									if(url){
+										$('<a href='+url+'>Website</a>').appendTo('.modal-body');
+									}
+									$('<div>'+venue.description+'<a class="get-directions" data-lat="'+venue.latlng+'" data-lng="'+venue.latlng+'">Get Directions</a></div>');
 									$('#venueModal').modal('show');
+
+								}
+							});
+
+							$('#map').on('click','.get-directions',function(e){
+								e.preventDefault();
+
+
+								if (navigator.geolocation) {
+
+									navigator.geolocation.getCurrentPosition(position=>{
+										let myLocation = {
+											lat:position.coords.latitude,
+											lng:position.coords.longitude
+										};
+
+										//create a request for directions
+
+										let destinationLatLng = {
+											lat: $(this).data('lat'),
+											lng: $(this).data('lng'),
+										};
+										let request = {
+									          origin: myLocation,
+									          destination: destinationLatLng,
+									          travelMode: 'WALKING'
+									        };
+										//ask directionsService to fulfill your request
+										directionsService.route(request,function(response,status){
+
+											directionsLayerGroup.clearLayers();
+
+											let path = response.routes["0"].overview_path;
+
+											let polyline = _(path).map(function(item){
+												return {lat:item.lat(),lng:item.lng()};
+											});
+
+											L.polyline(polyline,{
+												color:'tomato',
+												weight:5
+											}).addTo(directionsLayerGroup);
+											
+										});
+									});
 								}
 							});
 
@@ -177,4 +242,8 @@ $(()=>{
  	
 });
 
-
+//googlemaps directions
+function initMap(){
+	directionsService = new google.maps.DirectionsService;
+	
+}
