@@ -3,6 +3,7 @@ const version = '?v=20170901';
 const clientid = '&client_id=DX131ZQSFRPLAGRPEQZJCFFUJQN0N0JZMD04A24GAIWFUPYI';
 const clientSecret = '&client_secret=IVX1Q1PKRFQZXPK2UYWXOHPXVBNYP4SJ1TS4XOIZR15LODFN';
 const key = version + clientid + clientSecret;
+const ATkey = '2f0c1b52e45a4d16bd76190029149cf1';
 
 var lat, lng;
 
@@ -39,7 +40,7 @@ $(()=>{
  		
  	});
 
- 	
+
  	$('.choices').on('click', function(){
  		
  		let choice = $(this).data('choice');
@@ -50,75 +51,119 @@ $(()=>{
 	 	$(this).closest('section').hide();
 
 
-	 	// if(choice == 'busstop'){
+	 	if(choice == 'busstop'){
 
-	 	// }else{
+	 		let busUrl = 'https://api.at.govt.nz/v2/gtfs/stops/geosearch?lat='+lat+'&lng='+lng+'&distance=500';
 
-	 	// }
- 		let exploreUrl = 'https://api.foursquare.com/v2/venues/explore'+key+'&ll='+lat+','+lng+'&section='+choice;
+	 		$.ajax({
+	 			url:busUrl,
+	 			beforeSend: function(xhrObj){
+	                // Request headers
+	                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",ATkey);
+	            },
+	            success:function(res){
+	            	
+	            	let busdata = res.response;
 
- 		$.ajax({
-			url:exploreUrl,
-			dataType:'jsonp', 
-			success:function(res){
-				let data = res.response.groups["0"].items;
+	               	_(busdata).each(function(stop){
 
-				console.log(data);
+	               		let stopIcon = L.icon({
+	               			iconUrl:'assets/icons/bus.svg',
+	               			iconSize:[40,40]
+	               		});
+	               		let latlng = {
+	               			lat:stop.stop_lat,
+	               			lng:stop.stop_lon
+	               		};
 
-				let venues = _(data).map(function(item){
-					return {
-						latlng:{lat:item.venue.location.lat,lng:item.venue.location.lng},
-						name:item.venue.name,
-						venueid:item.venue.id
-					};
-				});
+	               		let busStopMarker = L.marker(latlng,{icon:stopIcon}).addTo(map);
+	               		busStopMarker.data = stop;
 
-				console.log(venues);
+	               		
+						busStopMarker.on('click', function(){
+		
+							let busStopData = this.data;
+							$('.modal-title').text(busStopData.stop_name);
+							let code = busStopData.stop_code;
+							
+							$('.modal-body').empty();
+							$('<p>Stop Code: '+code+'</p>').appendTo('.modal-body');
+							$('#venueModal').modal('show');
 
-				_(venues).each(function(venue){
-					let venueIcon = L.icon({
-						iconUrl:'assets/icons/marker.svg',
-						iconSize:[50,50]
-					});
 
-					let marker = L.marker(venue.latlng,{icon:venueIcon}).addTo(map);
-					marker.venueid = venue.venueid;
-					console.log(marker);
-
-					marker.on('click',function(){
-						let venueUrl = 'https://api.foursquare.com/v2/venues/'+this.venueid+key;
-
-						$.ajax({
-							url:venueUrl,
-							dataType:'jsonp',
-							success:function(res){
-								let venue = res.response.venue;
-
-								$('.modal-title').text(venue.name);
-								let photo = venue.bestPhoto;
-								let source = photo.prefix+'100x100'+photo.suffix;
-								let contact = venue.contact.phone;
-								let address = venue.location.address;
-								let hours = venue.hours;
-								let url = venue.url;
-								$('.modal-body').empty();
-								$('<img src="'+source+'">').appendTo('.modal-body');
-								$('<p><a href="tel:'+contact+'">Phone: '+contact+'</a></p>').appendTo('.modal-body');
-								$('<p>Address: '+address+'</p>').appendTo('.modal-body');
-								$('<p>Hours: '+hours+'</p>').appendTo('.modal-body');
-								$('<a href='+url+'>Website</a>').appendTo('.modal-body');
-								$('#venueModal').modal('show');
-							}
 						});
 
+	               	});
+	            }
+
+	 		});
+
+	 	}else{
+
+			let exploreUrl = 'https://api.foursquare.com/v2/venues/explore'+key+'&ll='+lat+','+lng+'&section='+choice;
+
+	 		$.ajax({
+				url:exploreUrl,
+				dataType:'jsonp', 
+				success:function(res){
+					let data = res.response.groups["0"].items;
+
+					console.log(data);
+
+					let venues = _(data).map(function(item){
+						return {
+							latlng:{lat:item.venue.location.lat,lng:item.venue.location.lng},
+							name:item.venue.name,
+							venueid:item.venue.id
+						};
 					});
-				
-				});
-			}
 
- 		});
+					console.log(venues);
 
-	
+					_(venues).each(function(venue){
+						let venueIcon = L.icon({
+							iconUrl:'assets/icons/marker.svg',
+							iconSize:[50,50]
+						});
+
+						let marker = L.marker(venue.latlng,{icon:venueIcon}).addTo(map);
+						marker.venueid = venue.venueid;
+						console.log(marker);
+
+						marker.on('click',function(){
+							let venueUrl = 'https://api.foursquare.com/v2/venues/'+this.venueid+key;
+
+							$.ajax({
+								url:venueUrl,
+								dataType:'jsonp',
+								success:function(res){
+									let venue = res.response.venue;
+
+									$('.modal-title').text(venue.name);
+									let photo = venue.bestPhoto;
+									let source = photo.prefix+'100x100'+photo.suffix;
+									let contact = venue.contact.phone;
+									let address = venue.location.address;
+									let hours = venue.hours;
+									let url = venue.url;
+									$('.modal-body').empty();
+									$('<img src="'+source+'">').appendTo('.modal-body');
+									$('<p><a href="tel:'+contact+'">Phone: '+contact+'</a></p>').appendTo('.modal-body');
+									$('<p>Address: '+address+'</p>').appendTo('.modal-body');
+									$('<p>Hours: '+hours+'</p>').appendTo('.modal-body');
+									$('<a href='+url+'>Website</a>').appendTo('.modal-body');
+									$('#venueModal').modal('show');
+								}
+							});
+
+						});
+					
+					});
+				}
+
+	 		});
+	 	}
+ 		
 
 		
 	});
