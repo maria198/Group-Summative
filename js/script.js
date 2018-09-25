@@ -154,7 +154,7 @@ $(()=>{
 									let source = photo.prefix+'100x100'+photo.suffix;
 									let contact = venue.contact.phone;
 									let address = venue.location.address;
-									let hours = venue.hours;
+									// let hours = venue.hours;
 									let url = venue.url;
 									$('.modal-body').empty();
 									$('<img src="'+source+'">').appendTo('.modal-body');
@@ -164,14 +164,14 @@ $(()=>{
 									}
 									$('<p>Address: '+address+'</p>').appendTo('.modal-body');
 
-									if(hours){
-										$('<p>Hours: '+hours+'</p>').appendTo('.modal-body');
-									}
+									// if(hours){
+									// 	$('<p>Hours: '+hours+'</p>').appendTo('.modal-body');
+									// }
 									
 									if(url){
 										$('<a href='+url+'>Website</a>').appendTo('.modal-body');
 									}
-									$('<div>'+venue.description+'<a class="get-directions" data-lat="'+venue.latlng+'" data-lng="'+venue.latlng+'">Get Directions</a></div>');
+									$('<div><a class="get-directions" data-lat="'+venue.lat+'" data-lng="'+venue.lng+'">Get Directions</a></div>').appendTo('.modal-body');
 									$('#venueModal').modal('show');
 
 								}
@@ -212,8 +212,8 @@ $(()=>{
 											});
 
 											L.polyline(polyline,{
-												color:'tomato',
-												weight:5
+												color:$color1,
+												weight:3
 											}).addTo(directionsLayerGroup);
 											
 										});
