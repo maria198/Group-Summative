@@ -171,7 +171,7 @@ $(()=>{
 									if(url){
 										$('<a href='+url+'>Website</a>').appendTo('.modal-body');
 									}
-									$('<div><a class="get-directions" data-lat="'+venue.lat+'" data-lng="'+venue.lng+'">Get Directions</a></div>').appendTo('.modal-body');
+									$('<div><a class="get-directions" data-lat="'+venue.location.lat+'" data-lng="'+venue.location.lng+'">Get Directions</a></div>').appendTo('.modal-body');
 									$('#venueModal').modal('show');
 
 								}
@@ -212,7 +212,7 @@ $(()=>{
 											});
 
 											L.polyline(polyline,{
-												color:$color1,
+												color:'#97D8BC',
 												weight:3
 											}).addTo(directionsLayerGroup);
 											
