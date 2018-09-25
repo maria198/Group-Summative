@@ -13,19 +13,6 @@
 <body>
 	
 	<div class="mobile">
-	<!-- 	<header>
-			<div class="header-wrapper">
-				<div class="tag-select">select place</div>
-				<div class="logo-white">
-					<img src="assets/images/logo-white.png" alt="GLOBE">
-				</div>
-				<div class="media">
-					<i class="fab fa-facebook-square"></i>
-					<i class="fas fa-camera-retro"></i>
-					<i class="fab fa-twitter-square"></i>
-				</div>
-			</div>
-		</header> -->
 
 		<section id="loading-page" class="section section-1">
 			<div class="content">
@@ -176,79 +163,6 @@
 			</div>
 		</section>
 	</div>
-
-
-	<!-- <div class="desktop">
-		<header>
-			<div class="header-wrapper">
-				<div class="tag-select">select place</div>
-				<div class="logo-white">
-					<img src="assets/images/logo-white.png" alt="GLOBE">
-				</div>
-				<div class="media">
-					<i class="fab fa-facebook-square"></i>
-					<i class="fas fa-camera-retro"></i>
-					<i class="fab fa-twitter-square"></i>
-				</div>
-			</div>
-		</header>
-		<div class="search-bar">
-			<div class="search-wrapper container">
-				<div class="row no-gutters">
-					<div class="col-3">
-						<div class="dropdown show">
-							<a class="dropdown-toggle dropdown-header" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							    City
-							</a>
-							<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-							   	<li class="dropdown-item">Auckland</li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-3">
-						<div class="dropdown show">
-							<h3 class="error-suburb">Surburb is not selected!</h3>
-							<a class="dropdown-toggle dropdown-header" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							    Suburb
-							</a>
-							<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-							   	<li class="dropdown-item" v-for="suburb in suburbs">{{suburb.name}}</li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-md-3 offset-3">
-						<div class="selectplace-button">
-							<img src="assets/images/explore.png" alt="explore">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<main>
-			<div class="main-wrapper container">
-				<div class="row no-gutters">
-					<div class="col-3">
-						<div class="dropdown show">
-							<a class="dropdown-toggle dropdown-header" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							    Popular
-							</a>
-							<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-							   	<li class="dropdown-item">Popular</li>
-							   	<li class="dropdown-item">Accomondation</li>
-							   	<li class="dropdown-item">Art &amp; Culture</li>
-							   	<li class="dropdown-item">Buses</li>
-							   	<li class="dropdown-item">Food &amp; Beverage</li>
-							   	<li class="dropdown-item">Parks &amp; Walks</li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-9">
-						<div id="map-desktop"></div>
-					</div>
-				</div>
-			</div>
-		</main>
-	</div> -->
 	
 	<!-- Template for venue -->
 	<script id="templateVenueInfo" type="text/template7">
@@ -256,6 +170,7 @@
 			<h3 class="venue-name">{{name}}</h3>
 			<h4 class="venue-address">{{location.address,location.crossStreet}}</h4>
 			<div class="venue-rate">1 1 1 1 1</div>
+			<div class="venue-phone"><a href="#">{{contact.phone}}</a></div>
 		</div>
 		<div class="content-venue-photo"></div>
 	</script>
@@ -270,6 +185,7 @@
 	<script src="vendore/anime/anime.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="assets/data/auckland-suburbs.js"></script>
+	<script src="https://unpkg.com/@mapbox/leaflet-pip@latest/leaflet-pip.js"></script>
 	<script src="js/script.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDknEtmtQzCjjFGOAJiHVFKcBegAsUBUKc&callback=initMap"
     async defer></script>

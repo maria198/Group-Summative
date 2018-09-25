@@ -44,8 +44,8 @@ let dropDown = new Vue({
 
 //FourSquare Client Id,key
 const version = '?v=20170901';
-const clientid = '&client_id=RPGUL25RSMX1OOV0ZFGA3OGD0IF5XKQB0SA4RWEC1VIHWTHF';
-const clientSecret = '&client_secret=UY2ZX5BNM03Z0SIHI4CPLHI4PMAW1PS01ZLK2D2NOV14DVL4';
+const clientid = '&client_id=FP1I4WJSN14C1CP41SACQI3F1KSH4I0IJDO1IYKCKZBDKZIO';
+const clientSecret = '&client_secret=CJHT5MHLZSEAU2NXKOT1IVTQJAGG1TH1C11VAPK5DFIYPRVC';
 const key = version + clientid + clientSecret;
 
 // Data: foursquare id,icons for categories
@@ -103,7 +103,6 @@ $(()=>{
  			suburbSelectedId = $(this).data('suburbid');
 
  			oSuburb = suburbs[suburbSelectedId];
- 			console.log(oSuburb);
  		});
  	});
  	
@@ -144,7 +143,6 @@ $(()=>{
 						fill:true
 					});
 			layerGroup.addLayer(suburbArea);
-			console.log(polylineCenter);
 			// Position map view 
 			map.fitBounds(oSuburbPolygon.getBounds());
  		}
@@ -167,11 +165,10 @@ $(()=>{
  					categoryIcon = categories[i].iconUrl;
  				}
  			}
- 			console.log(categoryId);
  		});
  	});
  	var markerLayer = L.layerGroup().addTo(map);
-
+ 	//template 7, request venues from foursquare
  	let VenueInfoHTML = $('#templateVenueInfo').text();
  	let VenueInfoTemplate = Template7(VenueInfoHTML).compile();
  	$('.mobile').on('click','.choices', function(){
@@ -180,7 +177,6 @@ $(()=>{
  		let urlProject;
  		if (categoryKeyword == 'popular'){
  			urlProjects = 'https://api.foursquare.com/v2/venues/trending'+key+'&ll='+polylineCenter.lat+','+polylineCenter.lng+'&radius='+radiusFoursquare+'&limit=10';
- 			console.log(urlProjects);
  		}else{
  			urlProjects = 'https://api.foursquare.com/v2/venues/search'+key+'&ll='+polylineCenter.lat+','+polylineCenter.lng+'&radius='+radiusFoursquare+'&limit=10&categoryId='+categoryId;
  		}
@@ -196,7 +192,6 @@ $(()=>{
 							latlng: {lat:venue.location.lat,lng:venue.location.lng}
 						}
 					});
-					console.log(venues);
 					_(venues).each(function(venue){
 
 						let venueIcon = L.icon({
@@ -215,14 +210,13 @@ $(()=>{
 								dataType: 'jsonp',
 								success: function(res){
 									var venue = res.response.venue;
-									console.log(res);
+									console.log(venue);
 									//get coordinates for google direction
 									destination = {lat:venue.location.lat,lng:venue.location.lng};
 
-									console.log(destination);
-									$('.content-venue-photo').empty();
-									var output = VenueInfoTemplate(venue);
 									$('.venue-info-container').empty();
+									var output = VenueInfoTemplate(venue);
+							
 									$('.venue-info-container').append(output);
 
 									//get photo if it exists
@@ -231,9 +225,9 @@ $(()=>{
 										let photoUrl = photo.prefix+'150x150'+photo.suffix;
 										$('<img src="'+photoUrl+'">').appendTo('.content-venue-photo');
 									} 
+									$('#venueInfo').show(400);
 								}
 							});
-							$('#venueInfo').show(400);
 							$('#closeVenueInfo').on('click', function(){
 								$('#venueInfo').slideUp();
 							});
@@ -242,7 +236,110 @@ $(()=>{
 				}
 			});
  	});
- 		
+
+ 	// geojson
+ 	var geoJsonLayer = L.geoJson(data,{
+						style:function(feature){
+							return {
+								color: 'orange',
+								fillColor: '#FFD34E',
+								fill: false,
+								weight: 0.5,
+								className:'school-zone'
+
+							}
+						} 
+	}).addTo(map);
+ 	// map on click
+ 	// get venues around clicked area
+ 	var clickLayer = L.layerGroup().addTo(map);
+ 	map.on('click', function(e){
+ 		$('#venueInfo').slideUp();
+ 		clickLayer.clearLayers();
+ 		layerGroup.clearLayers();
+ 		markerLayer.clearLayers();
+ 		routeLayer.clearLayers();
+ 		polylineCenter = e.latlng;
+
+ 		var results = leafletPip.pointInLayer(polylineCenter, geoJsonLayer);
+
+		_(results).each(function(polygon){
+			var suburbPolygon = L.polygon(polygon._latlngs, {
+				color: '#289F8E',
+				weight: 2,
+				fill: false
+			});
+			clickLayer.addLayer(suburbPolygon);
+		});
+
+ 		var suburbArea = L.circle(polylineCenter, {
+						radius: radiusFoursquare,
+						color: 'salmon',
+						weight:1,
+						fill:true
+					});
+			layerGroup.addLayer(suburbArea);
+ 		let urlProject;
+ 		if (categoryKeyword == 'popular'){
+ 			urlProjects = 'https://api.foursquare.com/v2/venues/trending'+key+'&ll='+polylineCenter.lat+','+polylineCenter.lng+'&radius='+radiusFoursquare+'&limit=10';
+ 		}else{
+ 			urlProjects = 'https://api.foursquare.com/v2/venues/search'+key+'&ll='+polylineCenter.lat+','+polylineCenter.lng+'&radius='+radiusFoursquare+'&limit=10&categoryId='+categoryId;
+ 		}
+			$.ajax({
+				url: urlProjects,
+				dataType: 'jsonp',
+				success: function(res){
+					var data = res.response.venues;
+					var venues = _(data).map(function(venue){
+						return {
+							venueid:venue.id,
+							name:venue.name,
+							latlng: {lat:venue.location.lat,lng:venue.location.lng}
+						}
+					});
+					_(venues).each(function(venue){
+
+						let venueIcon = L.icon({
+							iconUrl: categoryIcon,
+							iconSize: [40,40]
+						});
+						let marker = L.marker(venue.latlng,{icon: venueIcon});
+						markerLayer.addLayer(marker);
+						marker.venueId = venue.venueid;
+
+						// popup venue-info
+						marker.on('click',function(){
+							var venueUrl = 'https://api.foursquare.com/v2/venues/'+this.venueId+key;
+							$.ajax({
+								url: venueUrl,
+								dataType: 'jsonp',
+								success: function(res){
+									var venue = res.response.venue;
+									console.log(venue);
+									//get coordinates for google direction
+									destination = {lat:venue.location.lat,lng:venue.location.lng};
+
+									$('.venue-info-container').empty();
+									var output = VenueInfoTemplate(venue);
+									$('.venue-info-container').append(output);
+
+									//get photo if it exists
+									let photo = venue.bestPhoto;
+									if( photo != undefined){
+										let photoUrl = photo.prefix+'150x150'+photo.suffix;
+										$('<img src="'+photoUrl+'">').appendTo('.content-venue-photo');
+									} 
+									$('#venueInfo').show(400);
+								}
+							});
+							$('#closeVenueInfo').on('click', function(){
+								$('#venueInfo').slideUp();
+							});
+						});
+					});
+				}
+			});
+ 	});
  
  	//Back buttons 
  	$('#back-section2').on('click', function(){
@@ -253,6 +350,7 @@ $(()=>{
  	$('#back-section3').on('click', function(){
  		$('.current-section').removeClass('current-section');
  		$('.section-3').addClass('current-section');
+ 		$('#venueInfo').hide();
  	});
 });
 
