@@ -24,7 +24,7 @@ $(()=>{
 	setTimeout(function(){ 
 		$('.section-0').hide();
 		$('.section-0').next().show(); 
-	}, 3500);
+	}, 3000);
 
  	let locateMe = $('.dropdown-item').on('click', function(){
 
@@ -34,7 +34,7 @@ $(()=>{
  		map.setView(new L.LatLng(lat, lng), 15);
 
  		let location = $(this)[0].innerText;
- 		console.log(location);
+
  		$('.location-title h3, .dropdown-toggle').text(location);
  	});
 
@@ -115,8 +115,6 @@ $(()=>{
 					markersLayer.clearLayers();
 					let data = res.response.groups["0"].items;
 
-					console.log(data);
-
 					let venues = _(data).map(function(item){
 						return {
 							latlng:{lat:item.venue.location.lat,lng:item.venue.location.lng},
@@ -124,8 +122,6 @@ $(()=>{
 							venueid:item.venue.id
 						};
 					});
-
-					console.log(venues);
 
 					_(venues).each(function(venue){
 						let venueIcon = L.icon({
@@ -135,10 +131,6 @@ $(()=>{
 
 						let marker = L.marker(venue.latlng,{icon:venueIcon}).addTo(markersLayer);
 						marker.venueid = venue.venueid;
-
-						
-						
-						console.log(marker);
 
 						marker.on('click',function(){
 							let venueUrl = 'https://api.foursquare.com/v2/venues/'+this.venueid+key;
@@ -154,7 +146,6 @@ $(()=>{
 									let source = photo.prefix+'100x100'+photo.suffix;
 									let contact = venue.contact.phone;
 									let address = venue.location.address;
-									// let hours = venue.hours;
 									let url = venue.url;
 									$('.modal-body').empty();
 									$('<img src="'+source+'">').appendTo('.modal-body');
@@ -162,12 +153,10 @@ $(()=>{
 									if(contact){
 										$('<p><a href="tel:'+contact+'">Phone: '+contact+'</a></p>').appendTo('.modal-body');
 									}
-									$('<p>Address: '+address+'</p>').appendTo('.modal-body');
-
-									// if(hours){
-									// 	$('<p>Hours: '+hours+'</p>').appendTo('.modal-body');
-									// }
-									
+									if(address){
+										$('<p>Address: '+address+'</p>').appendTo('.modal-body');
+									}
+																		
 									if(url){
 										$('<a href='+url+'>Website</a>').appendTo('.modal-body');
 									}
@@ -180,7 +169,7 @@ $(()=>{
 							$('#map').on('click','.get-directions',function(e){
 								e.preventDefault();
 
-
+								$('#venueModal').modal('hide');
 								if (navigator.geolocation) {
 
 									navigator.geolocation.getCurrentPosition(position=>{
