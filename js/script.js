@@ -42,8 +42,8 @@ let dropDown = new Vue({
 
 //FourSquare Client Id,key
 const version = '?v=20170901';
-const clientid = '&client_id=RPGUL25RSMX1OOV0ZFGA3OGD0IF5XKQB0SA4RWEC1VIHWTHF';
-const clientSecret = '&client_secret=UY2ZX5BNM03Z0SIHI4CPLHI4PMAW1PS01ZLK2D2NOV14DVL4';
+const clientid = '&client_id=LBONI4Q12DGKUDVI0SYJJH53UDEKJDPSGKTXVFAE05L2NCF1';
+const clientSecret = '&client_secret=USELK11ZCD5ZC3ABP4IVCU5AFG3XQZELX2VSKQWKTBL1HZNE';
 const key = version + clientid + clientSecret;
 
 // Data: foursquare id,icons for categories
@@ -182,14 +182,27 @@ $(()=>{
 				url: urlProjects,
 				dataType: 'jsonp',
 				success: function(res){
-					var data = res.response.venues;
-					var venues = _(data).map(function(venue){
-						return {
-							venueid:venue.id,
-							name:venue.name,
-							latlng: {lat:venue.location.lat,lng:venue.location.lng}
-						}
-					});
+					var data;
+					var venues;
+					if(categoryKeyword == 'popular'){
+						data = res.response.groups["0"].items;
+						venues = _(data).map(function(item){
+							return {
+								venueid:item.venue.id,
+								name:item.venue.name,
+								latlng: {lat:item.venue.location.lat,lng:item.venue.location.lng}
+							}
+						});
+					}else{
+					 	data = res.response.venues;
+					 	venues = _(data).map(function(venue){
+							return {
+								venueid:venue.id,
+								name:venue.name,
+								latlng: {lat:venue.location.lat,lng:venue.location.lng}
+							}
+						});
+					}
 					_(venues).each(function(venue){
 
 						let venueIcon = L.icon({
@@ -208,7 +221,6 @@ $(()=>{
 								dataType: 'jsonp',
 								success: function(res){
 									var venue = res.response.venue;
-									console.log(venue);
 									//get coordinates for google direction
 									destination = {lat:venue.location.lat,lng:venue.location.lng};
 
@@ -216,7 +228,7 @@ $(()=>{
 									var output = VenueInfoTemplate(venue);
 							
 									$('.venue-info-container').append(output);
-									let rating = venue.rating;
+									// d3 drawing star rating of venue
 									var width = 100,
 										height = 10,
 										margin = 10;
@@ -252,19 +264,20 @@ $(()=>{
 										.attr('x',0)
 										.attr('width', width)
 										.attr('clip-path','url(#starClip)');
+									if (venue.rating != undefined){ //checks existence of rating and draws rating bar
+										let rating = venue.rating;
 
-									var rateBar = d3.select('.chart g').append('rect')
-										.attr('class','barthing')
-										.attr('fill','#ffffe0')
-										.attr('width',0)
-										.attr('height',barWidth)
-										.attr('y',(d,i)=>i*(barWidth+5))
-										.attr('x',0)
-										.attr('width', (d,i) => xScale(rating))
-										.attr('clip-path','url(#starClip)');
-
-
-
+										var rateBar = d3.select('.chart g').append('rect')
+											.attr('class','barthing')
+											.attr('fill','#ffffe0')
+											.attr('width',0)
+											.attr('height',barWidth)
+											.attr('y',(d,i)=>i*(barWidth+5))
+											.attr('x',0)
+											.attr('width', (d,i) => xScale(rating))
+											.attr('clip-path','url(#starClip)');
+									}
+										
 									//get photo if it exists
 									let photo = venue.bestPhoto;
 									if( photo != undefined){
@@ -336,14 +349,27 @@ $(()=>{
 				url: urlProjects,
 				dataType: 'jsonp',
 				success: function(res){
-					var data = res.response.venues;
-					var venues = _(data).map(function(venue){
-						return {
-							venueid:venue.id,
-							name:venue.name,
-							latlng: {lat:venue.location.lat,lng:venue.location.lng}
-						}
-					});
+					var data;
+					var venues;
+					if(categoryKeyword == 'popular'){
+						data = res.response.groups["0"].items;
+						venues = _(data).map(function(item){
+							return {
+								venueid:item.venue.id,
+								name:item.venue.name,
+								latlng: {lat:item.venue.location.lat,lng:item.venue.location.lng}
+							}
+						});
+					}else{
+					 	data = res.response.venues;
+					 	venues = _(data).map(function(venue){
+							return {
+								venueid:venue.id,
+								name:venue.name,
+								latlng: {lat:venue.location.lat,lng:venue.location.lng}
+							}
+						});
+					}
 					_(venues).each(function(venue){
 
 						let venueIcon = L.icon({
@@ -368,7 +394,7 @@ $(()=>{
 									$('.venue-info-container').empty();
 									var output = VenueInfoTemplate(venue);
 									$('.venue-info-container').append(output);
-									let rating = venue.rating;
+									// d3 drawing star rating of venue
 									var width = 100,
 										height = 10,
 										margin = 10;
@@ -404,19 +430,19 @@ $(()=>{
 										.attr('x',0)
 										.attr('width', width)
 										.attr('clip-path','url(#starClip)');
+									if (venue.rating != undefined){
+										let rating = venue.rating;
 
-									var rateBar = d3.select('.chart g').append('rect')
-										.attr('class','barthing')
-										.attr('fill','#ffffe0')
-										.attr('width',0)
-										.attr('height',barWidth)
-										.attr('y',(d,i)=>i*(barWidth+5))
-										.attr('x',0)
-										.attr('width', (d,i) => xScale(rating))
-										.attr('clip-path','url(#starClip)');
-
-
-
+										var rateBar = d3.select('.chart g').append('rect')
+											.attr('class','barthing')
+											.attr('fill','#ffffe0')
+											.attr('width',0)
+											.attr('height',barWidth)
+											.attr('y',(d,i)=>i*(barWidth+5))
+											.attr('x',0)
+											.attr('width', (d,i) => xScale(rating))
+											.attr('clip-path','url(#starClip)');
+									}
 									//get photo if it exists
 									let photo = venue.bestPhoto;
 									if( photo != undefined){
