@@ -23,8 +23,6 @@ let suburbs = _(data.features).map(function(suburb){
 		})
 	}
 });
-console.log(data.features);
-console.log(suburbs);
 // Creates drop-down list with Auckland suburbs
 let dropDown = new Vue({
 	el:".selectplace-wrapper",
@@ -44,8 +42,8 @@ let dropDown = new Vue({
 
 //FourSquare Client Id,key
 const version = '?v=20170901';
-const clientid = '&client_id=FP1I4WJSN14C1CP41SACQI3F1KSH4I0IJDO1IYKCKZBDKZIO';
-const clientSecret = '&client_secret=CJHT5MHLZSEAU2NXKOT1IVTQJAGG1TH1C11VAPK5DFIYPRVC';
+const clientid = '&client_id=RPGUL25RSMX1OOV0ZFGA3OGD0IF5XKQB0SA4RWEC1VIHWTHF';
+const clientSecret = '&client_secret=UY2ZX5BNM03Z0SIHI4CPLHI4PMAW1PS01ZLK2D2NOV14DVL4';
 const key = version + clientid + clientSecret;
 
 // Data: foursquare id,icons for categories
@@ -138,7 +136,7 @@ $(()=>{
 			polylineCenter = oSuburbPolygon.getCenter();
 			var suburbArea = L.circle(polylineCenter, {
 						radius: radiusFoursquare,
-						color: 'salmon',
+						color: '#289F8E',
 						weight:1,
 						fill:true
 					});
@@ -176,7 +174,7 @@ $(()=>{
  		routeLayer.clearLayers();
  		let urlProject;
  		if (categoryKeyword == 'popular'){
- 			urlProjects = 'https://api.foursquare.com/v2/venues/trending'+key+'&ll='+polylineCenter.lat+','+polylineCenter.lng+'&radius='+radiusFoursquare+'&limit=10';
+ 			urlProjects = 'https://api.foursquare.com/v2/venues/explore'+key+'&ll='+polylineCenter.lat+','+polylineCenter.lng+'&radius='+radiusFoursquare+'&limit=10';
  		}else{
  			urlProjects = 'https://api.foursquare.com/v2/venues/search'+key+'&ll='+polylineCenter.lat+','+polylineCenter.lng+'&radius='+radiusFoursquare+'&limit=10&categoryId='+categoryId;
  		}
@@ -218,6 +216,54 @@ $(()=>{
 									var output = VenueInfoTemplate(venue);
 							
 									$('.venue-info-container').append(output);
+									let rating = venue.rating;
+									var width = 100,
+										height = 10,
+										margin = 10;
+									var spacing = width/2;
+									var barWidth = spacing/4;
+									var chart = d3.select('.chart')
+													.attr('viewBox','0 0 '+(width+margin)+' '+(height+margin))
+													.append('g')
+													.attr('transform','translate(0,'+margin/2+')');
+
+									var defs = d3.select('.chart').append('defs');
+
+									var starClip = defs.append('clipPath')
+														.attr('id','starClip')
+														.selectAll('path')
+														.data([0,1,2,3,4,5,6,7,8,9])
+														.enter()
+														.append(function(){
+															return document.querySelector('.star path').cloneNode(true);
+														})
+														.attr('transform',(d,i)=>'translate('+(width/10)*i+',0),scale(0.10)');
+									var xScale = d3.scaleLinear()
+													.domain([0,10])
+													.range([0,width]);
+
+									var xAxisGen = d3.axisTop(xScale).ticks(4);
+									var blankBar = d3.select('.chart g').append('rect')
+										.attr('class','barthing')
+										.attr('fill','#cc3333')
+										.attr('width',0)
+										.attr('height',barWidth)
+										.attr('y',(d,i)=>i*(barWidth+5))
+										.attr('x',0)
+										.attr('width', width)
+										.attr('clip-path','url(#starClip)');
+
+									var rateBar = d3.select('.chart g').append('rect')
+										.attr('class','barthing')
+										.attr('fill','#ffffe0')
+										.attr('width',0)
+										.attr('height',barWidth)
+										.attr('y',(d,i)=>i*(barWidth+5))
+										.attr('x',0)
+										.attr('width', (d,i) => xScale(rating))
+										.attr('clip-path','url(#starClip)');
+
+
 
 									//get photo if it exists
 									let photo = venue.bestPhoto;
@@ -241,8 +287,7 @@ $(()=>{
  	var geoJsonLayer = L.geoJson(data,{
 						style:function(feature){
 							return {
-								color: 'orange',
-								fillColor: '#FFD34E',
+								color: '#BDD5EA',
 								fill: false,
 								weight: 0.5,
 								className:'school-zone'
@@ -250,6 +295,7 @@ $(()=>{
 							}
 						} 
 	}).addTo(map);
+
  	// map on click
  	// get venues around clicked area
  	var clickLayer = L.layerGroup().addTo(map);
@@ -262,6 +308,7 @@ $(()=>{
  		polylineCenter = e.latlng;
 
  		var results = leafletPip.pointInLayer(polylineCenter, geoJsonLayer);
+ 		$('.location-title').find('h1').text(results["0"].feature.properties.BOARD);
 
 		_(results).each(function(polygon){
 			var suburbPolygon = L.polygon(polygon._latlngs, {
@@ -274,14 +321,14 @@ $(()=>{
 
  		var suburbArea = L.circle(polylineCenter, {
 						radius: radiusFoursquare,
-						color: 'salmon',
+						color: '#289F8E',
 						weight:1,
 						fill:true
 					});
 			layerGroup.addLayer(suburbArea);
  		let urlProject;
  		if (categoryKeyword == 'popular'){
- 			urlProjects = 'https://api.foursquare.com/v2/venues/trending'+key+'&ll='+polylineCenter.lat+','+polylineCenter.lng+'&radius='+radiusFoursquare+'&limit=10';
+ 			urlProjects = 'https://api.foursquare.com/v2/venues/explore'+key+'&ll='+polylineCenter.lat+','+polylineCenter.lng+'&radius='+radiusFoursquare+'&limit=10';
  		}else{
  			urlProjects = 'https://api.foursquare.com/v2/venues/search'+key+'&ll='+polylineCenter.lat+','+polylineCenter.lng+'&radius='+radiusFoursquare+'&limit=10&categoryId='+categoryId;
  		}
@@ -315,13 +362,60 @@ $(()=>{
 								dataType: 'jsonp',
 								success: function(res){
 									var venue = res.response.venue;
-									console.log(venue);
 									//get coordinates for google direction
 									destination = {lat:venue.location.lat,lng:venue.location.lng};
 
 									$('.venue-info-container').empty();
 									var output = VenueInfoTemplate(venue);
 									$('.venue-info-container').append(output);
+									let rating = venue.rating;
+									var width = 100,
+										height = 10,
+										margin = 10;
+									var spacing = width/2;
+									var barWidth = spacing/4;
+									var chart = d3.select('.chart')
+													.attr('viewBox','0 0 '+(width+margin)+' '+(height+margin))
+													.append('g')
+													.attr('transform','translate(0,'+margin/2+')');
+
+									var defs = d3.select('.chart').append('defs');
+
+									var starClip = defs.append('clipPath')
+														.attr('id','starClip')
+														.selectAll('path')
+														.data([0,1,2,3,4,5,6,7,8,9])
+														.enter()
+														.append(function(){
+															return document.querySelector('.star path').cloneNode(true);
+														})
+														.attr('transform',(d,i)=>'translate('+(width/10)*i+',0),scale(0.10)');
+									var xScale = d3.scaleLinear()
+													.domain([0,10])
+													.range([0,width]);
+
+									var xAxisGen = d3.axisTop(xScale).ticks(4);
+									var blankBar = d3.select('.chart g').append('rect')
+										.attr('class','barthing')
+										.attr('fill','#cc3333')
+										.attr('width',0)
+										.attr('height',barWidth)
+										.attr('y',(d,i)=>i*(barWidth+5))
+										.attr('x',0)
+										.attr('width', width)
+										.attr('clip-path','url(#starClip)');
+
+									var rateBar = d3.select('.chart g').append('rect')
+										.attr('class','barthing')
+										.attr('fill','#ffffe0')
+										.attr('width',0)
+										.attr('height',barWidth)
+										.attr('y',(d,i)=>i*(barWidth+5))
+										.attr('x',0)
+										.attr('width', (d,i) => xScale(rating))
+										.attr('clip-path','url(#starClip)');
+
+
 
 									//get photo if it exists
 									let photo = venue.bestPhoto;
@@ -366,7 +460,6 @@ function initMap(){
 	          		lat: position.coords.latitude,
 	          		lng: position.coords.longitude
 	          	};
-	          	console.log(userLocation);
 	          	// marker for user location
 	          	let userIcon = L.icon({
 							iconUrl: '../assets/markers/icon-user.svg',

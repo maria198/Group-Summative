@@ -1,4 +1,5 @@
 // Base
+
 .mobile{
 	min-height: 100vh;
 	width: 100%;
@@ -252,6 +253,7 @@ section.current-section{
 	}
 }
 // Popup for venue
+
 .venue-info{
 	display: none;
 	position: absolute;
@@ -272,7 +274,7 @@ section.current-section{
 		}
 	}
 	.info-content{
-		background-color: #777;
+		background-color: $color1;
 		color: $color2;
 		padding: 0.25em 1em;
 
@@ -282,11 +284,31 @@ section.current-section{
 	}
 	.content-text{
 		flex: 1 0 3em;
+
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+		justify-content: center;
+
 	}
+	.venue-phone{
+		a{
+			color: $color2;
+			font-size: 1.1em;
+		}
+	}
+}
+.chart {
+	background-color: $color1;
+	width: 90%;
+	max-width: 15em;
+}
+.icons {
+	display: none;
 }
 
 
-@media only screen and (min-width: 40em) {
+@media only screen and (min-width: 35em) {
 	.venue-info{
 		width: 80%;
 		max-width: 30em;
